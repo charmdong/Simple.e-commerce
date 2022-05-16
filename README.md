@@ -9,5 +9,6 @@ Spring MVC, Thymeleaf를 이용한 E커머스(상품 관리 및 주문 시스템
 4. JPA, Spring Data JPA
 5. AWS EC2
 6. Docker
-7. Junit
-8. AOP
+7. Jenkins
+8. Junit
+9. AOP
