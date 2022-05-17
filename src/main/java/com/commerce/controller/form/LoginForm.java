@@ -1,4 +1,4 @@
-package com.commerce.dto;
+package com.commerce.controller.form;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

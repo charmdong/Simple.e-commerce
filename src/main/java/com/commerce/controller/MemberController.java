@@ -5,10 +5,14 @@ import com.commerce.domain.Member;
 import com.commerce.dto.SessionVO;
 import com.commerce.dto.member.MemberDto;
 import com.commerce.service.MemberService;
+import com.commerce.util.SessionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 
@@ -34,7 +38,7 @@ public class MemberController {
 
     @GetMapping("/detail")
     public String detail (HttpSession session, Model model) {
-        SessionVO loginInfo = (SessionVO) session.getAttribute("loginInfo");
+        SessionVO loginInfo = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
         String id = loginInfo.getId();
         MemberDto member = memberService.findMember(id);
         model.addAttribute("member", member);
@@ -44,7 +48,7 @@ public class MemberController {
 
     @GetMapping("/edit")
     public String updateMemberForm(HttpSession session, Model model) {
-        SessionVO loginInfo = (SessionVO) session.getAttribute("loginInfo");
+        SessionVO loginInfo = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
         String id = loginInfo.getId();
         MemberDto member = memberService.findMember(id);
 
@@ -56,16 +60,16 @@ public class MemberController {
 
     @PostMapping("/edit")
     public String updateMember (HttpSession session, MemberForm form) {
-        SessionVO loginInfo = (SessionVO) session.getAttribute("loginInfo");
+        SessionVO loginInfo = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
         String id = loginInfo.getId();
         memberService.updateMember(id, form);
 
-        return "redirect:/members/detail";
+        return "members/detail";
     }
 
     @PostMapping("/delete")
     public String deleteMember (HttpSession session, @RequestParam String password) {
-        SessionVO loginInfo = (SessionVO) session.getAttribute("loginInfo");
+        SessionVO loginInfo = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
         String id = loginInfo.getId();
         memberService.deleteMember(id, password);
 

@@ -1,9 +1,10 @@
 package com.commerce.controller;
 
-import com.commerce.dto.LoginForm;
+import com.commerce.controller.form.LoginForm;
 import com.commerce.dto.SessionVO;
 import com.commerce.dto.member.MemberDto;
 import com.commerce.service.MemberService;
+import com.commerce.util.SessionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +36,7 @@ public class LoginOutController {
         loginInfo.setRole(memberDto.getRole());
 
         session.setMaxInactiveInterval(60 * 60 * 30);
-        session.setAttribute("loginInfo", loginInfo);
+        session.setAttribute(SessionUtils.LOGIN_SESSION, loginInfo);
 
         return "home";
     }
