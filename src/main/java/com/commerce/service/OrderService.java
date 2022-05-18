@@ -1,18 +1,15 @@
 package com.commerce.service;
 
 import com.commerce.domain.*;
-import com.commerce.dto.SessionVO;
 import com.commerce.dto.order.OrderDto;
 import com.commerce.repository.ItemRepository;
 import com.commerce.repository.MemberRepository;
 import com.commerce.repository.OrderRepository;
 import com.commerce.util.ExceptionUtils;
-import com.commerce.util.SessionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -67,8 +64,13 @@ public class OrderService {
         order.cancel();
     }
 
-    public List<OrderDto> findOrders (HttpSession session) {
-        SessionVO loginInfo = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
-        return orderRepository.findByMemberId(loginInfo.getId()).stream().map(OrderDto::new).collect(Collectors.toList());
+    /**
+     * 주문 조회
+     *
+     * @param userId
+     * @return
+     */
+    public List<OrderDto> findOrdersByMember (String userId) {
+        return orderRepository.findByMemberId(userId).stream().map(OrderDto::new).collect(Collectors.toList());
     }
 }
