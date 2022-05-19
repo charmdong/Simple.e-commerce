@@ -1,9 +1,11 @@
 package com.commerce.controller.form;
 
-import com.commerce.domain.Item;
+import com.commerce.dto.CategoryDto;
 import com.commerce.dto.ItemDto;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,18 +16,7 @@ public class ItemForm {
     private Integer price;
     private Integer stockQuantity;
     private String companyName;
-
-    public static ItemForm createItemForm(Item item) {
-        ItemForm itemForm = new ItemForm();
-
-        itemForm.setId(item.getId());
-        itemForm.setName(item.getName());
-        itemForm.setCompanyName(item.getCompanyName());
-        itemForm.setPrice(item.getPrice());
-        itemForm.setStockQuantity(item.getStockQuantity());
-
-        return itemForm;
-    }
+    private List<CategoryDto> categories;
 
     public static ItemForm createItemForm(ItemDto item) {
         ItemForm itemForm = new ItemForm();
@@ -35,6 +26,7 @@ public class ItemForm {
         itemForm.setCompanyName(item.getCompanyName());
         itemForm.setPrice(item.getPrice());
         itemForm.setStockQuantity(item.getStockQuantity());
+        itemForm.setCategories(item.getCategories());
 
         return itemForm;
     }

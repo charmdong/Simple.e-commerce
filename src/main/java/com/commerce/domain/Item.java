@@ -7,10 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,8 +26,8 @@ public class Item {
     private int stockQuantity;
     private String companyName;
 
-//    @ManyToMany(mappedBy = "items")
-//    private List<Category> categories = new ArrayList<>();
+    @ManyToMany(mappedBy = "items")
+    private List<Category> categories = new ArrayList<>();
 
     // 생성자 메서드
     public static Item createItem(ItemForm form) {

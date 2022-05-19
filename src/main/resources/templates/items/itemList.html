@@ -4,6 +4,7 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <h1>상품 리스트</h1>
     <div>
         <table class="table table-striped">
             <thead>
@@ -15,17 +16,15 @@
                 <th></th>
             </tr>
             </thead>
-            <tbody>
 
+            <tbody>
             <tr th:each="item : ${items}">
-                <td th:text="${item.id}"></td>
-                <td th:text="${item.name}"></td>
+                <td th:text="${item.id}" />
+                <td>
+                    <a th:text="${item.name}" th:href="@{/items/{id} (id=${item.id})}"/>
+                </td>
                 <td th:text="${item.price}"></td>
                 <td th:text="${item.stockQuantity}"></td>
-                <td>
-                    <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}" class="btn btn-primary"
-                       role="button">수정</a>
-                </td>
             </tr>
             </tbody>
         </table>
