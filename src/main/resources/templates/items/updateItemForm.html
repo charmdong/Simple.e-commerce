@@ -25,8 +25,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">수정하기</button>
-        <!-- TODO 수정하기 취소 -->
-        <button type="button" class="btn btn-warning">취소</button>
+        <a href="#" th:href="@{/items/{itemId}(itemId=*{id})}" class="btn btn-primary" role="button">취소</a>
     </form>
     <div th:replace="fragments/footer :: footer"/>
 </div> <!-- /container -->

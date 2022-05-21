@@ -23,11 +23,8 @@
     </div>
 
     <div>
-        <a href="#" th:href="@{/items}" class="btn btn-primary"
-           role="button">상품 목록</a>
-
-        <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}" class="btn btn-primary"
-           role="button">수정</a>
+        <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}" class="btn btn-primary" role="button">수정하기</a>
+        <a href="#" th:href="@{/items}" class="btn btn-primary" role="button">상품 목록</a>
     </div>
     <div th:replace="fragments/footer :: footer"/>
 </div>
