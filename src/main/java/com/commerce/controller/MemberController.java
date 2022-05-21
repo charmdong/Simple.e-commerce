@@ -7,6 +7,7 @@ import com.commerce.dto.member.MemberDto;
 import com.commerce.service.MemberService;
 import com.commerce.util.SessionUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/members")
@@ -24,12 +26,15 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/join")
-    public String joinForm () {
+    public String joinForm (Model model) {
+        model.addAttribute("memberForm", new MemberForm());
         return "members/createMemberForm";
     }
 
     @PostMapping("/join")
     public String join (MemberForm form) {
+        log.info("memberForm={}", form);
+
         Member member = Member.createMember(form);
         memberService.joinMember(member);
 
@@ -43,7 +48,7 @@ public class MemberController {
         MemberDto member = memberService.findMember(id);
         model.addAttribute("member", member);
 
-        return "members/detail";
+        return "members/memberDetail";
     }
 
     @GetMapping("/edit")

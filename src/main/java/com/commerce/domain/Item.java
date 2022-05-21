@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Item {
+public class Item extends BasicInfo {
 
     @Id
     @GeneratedValue

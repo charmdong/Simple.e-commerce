@@ -2,15 +2,20 @@ package com.commerce.controller;
 
 import com.commerce.controller.form.ItemForm;
 import com.commerce.domain.Item;
+import com.commerce.domain.Role;
 import com.commerce.dto.CategoryDto;
 import com.commerce.dto.ItemDto;
+import com.commerce.dto.SessionVO;
 import com.commerce.service.CategoryService;
 import com.commerce.service.ItemService;
+import com.commerce.util.SessionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -52,14 +57,26 @@ public class ItemController {
     }
 
     /**
-     * 상품 목록 조회 (관리자인 경우)
+     * 상품 목록 조회
      *
      * @param model
      * @return
      */
     @GetMapping
-    public String getItemList (Model model) {
-        List<ItemDto> items = itemService.findItems();
+    public String getItemList (HttpSession session, Model model) {
+        SessionVO loginInfo = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
+
+        List<ItemDto> items = new ArrayList<>();
+
+        // 관리자인 경우
+        if (loginInfo.getRole() == Role.ADMIN) {
+            items = itemService.findAllItems();
+        }
+        // 판매자인 경우
+        else {
+            items = itemService.findItems(loginInfo.getId());
+        }
+
         model.addAttribute("items", items);
 
         return "items/itemList";
@@ -106,7 +123,7 @@ public class ItemController {
     public String updateItem (@PathVariable("itemId") Long id, @ModelAttribute("form") ItemForm form) {
         itemService.updateItem(id, form);
 
-        return "redirect:/items";
+        return "redirect:/items/" + id;
     }
 
     /**

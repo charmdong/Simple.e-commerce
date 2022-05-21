@@ -1,6 +1,7 @@
 package com.commerce.controller.form;
 
 import com.commerce.domain.Address;
+import com.commerce.domain.Role;
 import com.commerce.dto.member.MemberDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ public class MemberForm {
     private String id;
     private String password;
     private String name;
+    private Role role;
     private Address address;
 
     public static MemberForm createMemberForm (MemberDto member) {

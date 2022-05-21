@@ -52,7 +52,12 @@ public class ItemService {
         return new ItemDto(findItem.get());
     }
 
-    public List<ItemDto> findItems() {
+    public List<ItemDto> findItems(String memberId) {
+        List<Item> itemList = itemRepository.findByRegId(memberId);
+        return itemList.stream().map(ItemDto::new).collect(Collectors.toList());
+    }
+
+    public List<ItemDto> findAllItems () {
         List<Item> itemList = itemRepository.findAll();
         return itemList.stream().map(ItemDto::new).collect(Collectors.toList());
     }
