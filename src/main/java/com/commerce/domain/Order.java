@@ -4,7 +4,6 @@ import com.commerce.util.ExceptionUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,9 +13,8 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Getter
-@Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 생성자를 protected로 생성
-public class Order {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Order extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "ORDER_ID")
@@ -64,8 +62,8 @@ public class Order {
             order.addOrderItem(orderItem);
         }
 
-        order.setStatus(OrderStatus.ORDER);
-        order.setOrderDate(LocalDateTime.now());
+        order.status = OrderStatus.ORDER;
+        order.orderDate = LocalDateTime.now();
 
         return order;
     }
@@ -79,7 +77,7 @@ public class Order {
             throw new IllegalStateException(ExceptionUtils.ALREADY_SENT);
         }
 
-        this.setStatus(OrderStatus.CANCEL);
+        this.status = OrderStatus.CANCEL;
         for (OrderItem orderItem: orderItems) {
             orderItem.cancel();
         }

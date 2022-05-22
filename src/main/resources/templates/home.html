@@ -19,7 +19,7 @@
 
         <p class="lead">상품 기능</p>
         <p>
-            <a class="btn btn-lg btn-warning" href="/items/new">상품 등록</a>
+            <a class="btn btn-lg btn-warning" href="/items/new" th:if="${session.loginInfo.role.name != 'USER'}">상품 등록</a>
             <a class="btn btn-lg btn-warning" href="/items">상품 목록</a>
         </p>
 

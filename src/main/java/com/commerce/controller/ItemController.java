@@ -68,13 +68,13 @@ public class ItemController {
 
         List<ItemDto> items = new ArrayList<>();
 
-        // 관리자인 경우
-        if (loginInfo.getRole() == Role.ADMIN) {
-            items = itemService.findAllItems();
-        }
         // 판매자인 경우
-        else {
+        if (loginInfo.getRole() == Role.SALE) {
             items = itemService.findItems(loginInfo.getId());
+        }
+        // 관리자, 일반 사용자의 경우
+        else {
+            items = itemService.findAllItems();
         }
 
         model.addAttribute("items", items);
