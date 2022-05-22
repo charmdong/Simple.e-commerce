@@ -18,12 +18,12 @@
             </thead>
 
             <tbody>
-            <tr th:each="item : ${items}">
-                <td th:text="${item.id}" />
+            <tr th:each="item, itemStatus : ${items}">
+                <td th:text="${itemStatus.count}" />
                 <td>
                     <a th:text="${item.name}" th:href="@{/items/{id} (id=${item.id})}"/>
                 </td>
-                <td th:text="${item.price}"></td>
+                <td th:text="${#numbers.formatInteger(item.price, 3, 'COMMA') + '원'}"></td>
                 <td th:text="${item.stockQuantity}"></td>
             </tr>
             </tbody>
