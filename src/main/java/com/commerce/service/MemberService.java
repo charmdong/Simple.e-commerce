@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -32,6 +34,11 @@ public class MemberService {
     public MemberDto findMember (String id) {
         Member member = memberRepository.findById(id).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.USER_NOT_FOUND));
         return new MemberDto(member);
+    }
+
+    @Transactional(readOnly = true)
+    public List<MemberDto> findAllMember () {
+        return memberRepository.findAll().stream().map(MemberDto::new).collect(Collectors.toList());
     }
 
     public void joinMember (Member member) {

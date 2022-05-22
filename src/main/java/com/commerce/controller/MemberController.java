@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -24,10 +26,16 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
 
     private final MemberService memberService;
+    private static Map<String, String> roles = new HashMap<>();
 
     @GetMapping("/join")
     public String joinForm (Model model) {
         model.addAttribute("memberForm", new MemberForm());
+
+        roles.put("USER", "일반");
+        roles.put("SALE", "판매자");
+        model.addAttribute("roles", roles);
+
         return "members/createMemberForm";
     }
 
@@ -39,6 +47,12 @@ public class MemberController {
         memberService.joinMember(member);
 
         return "redirect:/";
+    }
+
+    @GetMapping
+    public String memberList (Model model) {
+        model.addAttribute("members", memberService.findAllMember());
+        return "members/memberList";
     }
 
     @GetMapping("/detail")

@@ -21,6 +21,8 @@ public class Member {
     private String id;
     private String password;
     private String name;
+
+    @Enumerated(value = EnumType.STRING)
     private Role role;
 
     @Embedded
@@ -36,8 +38,8 @@ public class Member {
         member.id = form.getId();
         member.password = form.getPassword();
         member.name = form.getName();
-        member.address = form.getAddress();
-        member.role = Role.USER;
+        member.address = new Address(form.getCity(), form.getStreet(), form.getZipcode());
+        member.role = form.getRole();
 
         return member;
     }
@@ -51,8 +53,16 @@ public class Member {
             this.name = form.getName();
         }
 
-        if (form.getAddress() != null) {
-            this.address = form.getAddress();
+        if (StringUtils.hasText(form.getCity())) {
+            this.address.setCity(form.getCity());
+        }
+
+        if (StringUtils.hasText(form.getStreet())) {
+            this.address.setCity(form.getStreet());
+        }
+
+        if (StringUtils.hasText(form.getZipcode())) {
+            this.address.setCity(form.getZipcode());
         }
     }
 }

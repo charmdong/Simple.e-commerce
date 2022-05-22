@@ -4,7 +4,6 @@ import com.commerce.controller.form.ItemForm;
 import com.commerce.exception.NotEnoughStockException;
 import com.commerce.util.ExceptionUtils;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
@@ -13,8 +12,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
-public class Item extends BasicInfo {
+public class Item extends BaseEntity {
 
     @Id
     @GeneratedValue
@@ -33,10 +31,10 @@ public class Item extends BasicInfo {
     public static Item createItem(ItemForm form) {
         Item item = new Item();
 
-        item.setName(form.getName());
-        item.setCompanyName(form.getCompanyName());
-        item.setPrice(form.getPrice());
-        item.setStockQuantity(form.getStockQuantity());
+        item.name = form.getName();
+        item.companyName = form.getCompanyName();
+        item.price = form.getPrice();
+        item.stockQuantity= form.getStockQuantity();
 
         return item;
     }

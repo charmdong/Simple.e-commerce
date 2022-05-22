@@ -14,13 +14,18 @@ public class MemberForm {
     private String password;
     private String name;
     private Role role;
-    private Address address;
+    private String city;
+    private String street;
+    private String zipcode;
 
     public static MemberForm createMemberForm (MemberDto member) {
         MemberForm memberForm = new MemberForm();
 
         memberForm.name = member.getName();
-        memberForm.address = member.getAddress();
+        Address address = member.getAddress();
+        memberForm.city = address.getCity();
+        memberForm.street = address.getStreet();
+        memberForm.zipcode = address.getZipcode();
 
         return memberForm;
     }

@@ -3,8 +3,17 @@
 <head th:replace="fragments/header :: header"/>
 <style>
     span {float:left;}
-    input {margin-left: 60px;}
+    input {margin-left: 60px; margin-bottom: 10px;}
+    .form-group .form-check .text-center {margin-top: 10px;}
 </style>
+<script>
+    function checkId() {
+        var checkBtn = document.querySelector('#checkBtn');
+        var userId = document.querySelector('#id').value;
+
+        return false;
+    }
+</script>
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
@@ -17,6 +26,7 @@
         <div class="form-group">
             <span th:for="id">아이디</span>
             <input type="text" th:field="*{id}" class="form-control w-50" placeholder="ID를 입력하세요">
+            <button id="checkBtn" onclick="checkId();" type="button" class="btn btn-primary">중복 체크</button>
         </div>
 
         <div class="form-group">
@@ -24,22 +34,28 @@
             <input type="password" th:field="*{password}" class="form-control w-50" placeholder="비밀번호를 입력하세요">
         </div>
 
+        <!-- role -->
+        <div th:each="role: ${roles}" class="form-check form-check-inline" style="margin-bottom: 10px;">
+            <input type="radio" th:field="*{role}" th:value="${role.key}" class="form-check-input">
+            <label th:for="${#ids.prev('role')}" th:text="${role.value}" class="form-check-label"/>
+        </div>
+
         <!-- Address -->
         <div class="form-group">
             <span th:for="city">도시</span>
-            <input type="text" th:field="*{address.city}" class="form-control w-50" placeholder="도시를 입력하세요">
+            <input type="text" th:field="*{city}" class="form-control w-50" placeholder="도시를 입력하세요">
         </div>
         <div class="form-group">
             <span th:for="street">거리</span>
-            <input type="text" th:field="*{address.street}" class="form-control w-50" placeholder="거리를 입력하세요">
+            <input type="text" th:field="*{street}" class="form-control w-50" placeholder="거리를 입력하세요">
         </div>
         <div class="form-group">
             <span th:for="zipcode">우편번호</span>
-            <input type="text" th:field="*{address.zipcode}" class="form-control w-50" placeholder="우편번호를 입력하세요">
+            <input type="text" th:field="*{zipcode}" class="form-control w-50" placeholder="우편번호를 입력하세요">
         </div>
 
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary" style="margin-top:10px;">회원가입</button>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="submit" class="btn btn-primary">회원가입</button>
         </div>
     </form>
     <br/>

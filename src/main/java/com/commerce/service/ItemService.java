@@ -6,14 +6,15 @@ import com.commerce.dto.ItemDto;
 import com.commerce.repository.ItemRepository;
 import com.commerce.util.ExceptionUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -28,28 +29,18 @@ public class ItemService {
 
     @Transactional
     public void updateItem(Long id, ItemForm form) {
-        Optional<Item> findItem = itemRepository.findById(id);
-
-        if (findItem.isEmpty()) {
-            throw new NoSuchElementException(ExceptionUtils.ITEM_NOT_FOUND);
-        }
-
-        Item item = findItem.get();
+        Item item = itemRepository.findById(id).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.ITEM_NOT_FOUND));
         item.changeInfo(form);
     }
 
+    @Transactional
     public void deleteItem (Long id) {
         itemRepository.deleteById(id);
     }
 
     public ItemDto findOne(Long id) {
-        Optional<Item> findItem = itemRepository.findById(id);
-
-        if (findItem.isEmpty()) {
-            throw new NoSuchElementException(ExceptionUtils.ITEM_NOT_FOUND);
-        }
-
-        return new ItemDto(findItem.get());
+        Item findItem = itemRepository.findById(id).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.ITEM_NOT_FOUND));
+        return new ItemDto(findItem);
     }
 
     public List<ItemDto> findItems(String memberId) {

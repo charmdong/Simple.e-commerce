@@ -3,9 +3,11 @@ package com.commerce.dto;
 import com.commerce.domain.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
+@ToString
 public class SessionVO {
 
     private String id;

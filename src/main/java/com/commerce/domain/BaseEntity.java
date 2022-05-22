@@ -12,12 +12,12 @@ import javax.persistence.MappedSuperclass;
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 @Getter
-public class BasicInfo {
+public class BaseEntity {
 
-    @CreatedBy // @PrePersist
+    @CreatedBy
     @Column(updatable = false)
     private String regId;
 
-    @LastModifiedBy // @PreUpdate
+    @LastModifiedBy
     private String modId;
 }
