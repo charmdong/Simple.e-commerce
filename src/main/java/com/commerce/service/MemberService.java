@@ -41,6 +41,11 @@ public class MemberService {
         return memberRepository.findAll().stream().map(MemberDto::new).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public Boolean isValidId (String id) {
+        return memberRepository.findById(id).isEmpty();
+    }
+
     public void joinMember (Member member) {
         memberRepository.save(member);
     }

@@ -6,14 +6,6 @@
     input {margin-left: 60px; margin-bottom: 10px;}
     .form-group .form-check .text-center {margin-top: 10px;}
 </style>
-<script>
-    function checkId() {
-        var checkBtn = document.querySelector('#checkBtn');
-        var userId = document.querySelector('#id').value;
-
-        return false;
-    }
-</script>
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
@@ -26,12 +18,17 @@
         <div class="form-group">
             <span th:for="id">아이디</span>
             <input type="text" th:field="*{id}" class="form-control w-50" placeholder="ID를 입력하세요">
-            <button id="checkBtn" onclick="checkId();" type="button" class="btn btn-primary">중복 체크</button>
+            <button id="checkBtn" onclick="checkIdValidation();" type="button" class="btn btn-primary">중복 체크</button>
         </div>
 
         <div class="form-group">
-            <span th:for="password">비밀번호</span>
+            <span th:for="password">패스워드</span>
             <input type="password" th:field="*{password}" class="form-control w-50" placeholder="비밀번호를 입력하세요">
+        </div>
+
+        <div class="form-group">
+            <span th:for="confirmPassword">패스워드 확인</span>
+            <input type="password" id="confirmPassword" class="form-control w-50" placeholder="비밀번호를 입력하세요">
         </div>
 
         <!-- role -->
@@ -55,11 +52,12 @@
         </div>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="submit" class="btn btn-primary">회원가입</button>
+            <button type="submit" class="btn btn-primary" onclick="validateForm();">회원가입</button>
         </div>
     </form>
     <br/>
     <div th:replace="fragments/footer :: footer"/>
 </div> <!-- /container -->
+<script type="text/javascript" src="/js/member/join.js" charset="UTF-8"></script>
 </body>
 </html>
