@@ -28,7 +28,8 @@
             </tr>
             </tbody>
         </table>
-        <a style="margin-top: 5px;" class="btn btn-primary" href="/items/new">상품 등록</a>
+        <a style="margin-top: 5px;" class="btn btn-primary" href="/items/new"
+           th:if="${session.loginInfo.role.name != 'USER'}">상품 등록</a>
     </div>
     <div th:replace="fragments/footer :: footer"/>
 </div> <!-- /container -->

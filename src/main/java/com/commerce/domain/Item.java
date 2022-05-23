@@ -23,6 +23,7 @@ public class Item extends BaseEntity {
     private int price;
     private int stockQuantity;
     private String companyName;
+    private String description;
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
@@ -34,7 +35,8 @@ public class Item extends BaseEntity {
         item.name = form.getName();
         item.companyName = form.getCompanyName();
         item.price = form.getPrice();
-        item.stockQuantity= form.getStockQuantity();
+        item.stockQuantity = form.getStockQuantity();
+        item.description = form.getDescription();
 
         return item;
     }
@@ -58,6 +60,10 @@ public class Item extends BaseEntity {
 
         if (request.getStockQuantity() != null) {
             this.stockQuantity = request.getStockQuantity();
+        }
+
+        if (StringUtils.hasText(request.getDescription())) {
+            this.description = request.getDescription();
         }
     }
 

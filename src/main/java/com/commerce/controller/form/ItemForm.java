@@ -16,6 +16,7 @@ public class ItemForm {
     private Integer price;
     private Integer stockQuantity;
     private String companyName;
+    private String description;
     private List<CategoryDto> categories;
 
     public static ItemForm createItemForm(ItemDto item) {
@@ -26,6 +27,7 @@ public class ItemForm {
         itemForm.setCompanyName(item.getCompanyName());
         itemForm.setPrice(item.getPrice());
         itemForm.setStockQuantity(item.getStockQuantity());
+        itemForm.setDescription(item.getDescription());
         itemForm.setCategories(item.getCategories());
 
         return itemForm;

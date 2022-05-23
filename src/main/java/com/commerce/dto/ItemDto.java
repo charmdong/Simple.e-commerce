@@ -16,6 +16,7 @@ public class ItemDto {
     private String companyName;
     private int price;
     private int stockQuantity;
+    private String description;
     private List<CategoryDto> categories;
 
     public ItemDto (Item item) {
@@ -24,6 +25,7 @@ public class ItemDto {
         this.companyName = item.getCompanyName();
         this.price = item.getPrice();
         this.stockQuantity = item.getStockQuantity();
+        this.description = item.getDescription();
         this.categories = item.getCategories().stream().map(CategoryDto::new).collect(Collectors.toList());
     }
 }

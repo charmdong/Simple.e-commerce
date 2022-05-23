@@ -89,9 +89,16 @@ public class ItemController {
      * @return
      */
     @GetMapping("/{itemId}")
-    public String itemDetail (@PathVariable("itemId") Long id, Model model) {
+    public String itemDetail (@PathVariable("itemId") Long id, HttpSession session, Model model) {
+        SessionVO loginInfo = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
+
         ItemDto item = itemService.findOne(id);
         model.addAttribute("item", item);
+
+        // 일반 사용자의 경우 상품을 주문할 수 있는 화면으로 이동
+        if (loginInfo.getRole().equals(Role.USER)) {
+            return "items/orderItem";
+        }
 
         return "items/itemDetail";
     }

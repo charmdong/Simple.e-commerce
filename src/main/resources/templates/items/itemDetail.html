@@ -25,8 +25,7 @@
     <div style="margin-top: 10px;">
         <a href="#" th:href="@{/items}" class="btn btn-primary" role="button">상품 목록</a>
         <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}" class="btn btn-primary" role="button">수정하기</a>
-        <a onclick="deleteItem();" class="btn btn-warning" role="button"
-            th:if="${session.loginInfo.role.name != 'USER'}">삭제하기</a>
+        <a onclick="deleteItem();" class="btn btn-warning" role="button">삭제하기</a>
         <a id="deleteItem" style="display:none;" th:href="@{/items/{id}/delete (id=${item.id})}"/>
     </div>
     <div th:replace="fragments/footer :: footer"/>
