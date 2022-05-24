@@ -27,7 +27,7 @@ public class LoginOutController {
     }
 
     @PostMapping("/login")
-    public String login(LoginForm form, HttpServletRequest request) {
+    public String login(LoginForm form, HttpServletRequest request) throws Exception {
 
         HttpSession session = request.getSession();
 
