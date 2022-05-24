@@ -33,14 +33,15 @@ public class OrderController {
 
     /**
      * 주문
-     *
-     * @param userId
+     * @param session
      * @param itemId
      * @param count
      * @return
      */
     @PostMapping("/order")
-    public String order (@RequestParam("memberId") String userId, @RequestParam("itemId") Long itemId, @RequestParam("count") int count) {
+    public String order (HttpSession session, @RequestParam("itemId") Long itemId, @RequestParam("count") int count) {
+        SessionVO sessionVO = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
+        String userId = sessionVO.getId();
         orderService.order(userId, itemId, count);
         return "redirect:/orders";
     }

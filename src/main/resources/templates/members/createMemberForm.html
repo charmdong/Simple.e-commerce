@@ -9,7 +9,7 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-    <form role="form" action="/members/join" th:object="${memberForm}" method="post">
+    <form id="memberForm" role="form" action="/members/join" th:object="${memberForm}" method="post">
         <div class="form-group">
             <span th:for="name">이름</span>
             <input type="text" th:field="*{name}" class="form-control w-50" placeholder="이름을 입력하세요">
@@ -52,7 +52,7 @@
         </div>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="submit" class="btn btn-primary" onclick="validateForm();">회원가입</button>
+            <button type="button" class="btn btn-primary" onclick="validateForm();">회원가입</button>
         </div>
     </form>
     <br/>

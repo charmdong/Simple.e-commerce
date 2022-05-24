@@ -37,4 +37,7 @@
             return false;
         }
         // 4. 주소
+
+        // submit
+        $('#memberForm').submit();
     }

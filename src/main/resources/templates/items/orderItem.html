@@ -8,12 +8,12 @@
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
 
-    <form th:action="@{/orders}" th:object="${item}" method="post">
+    <form th:action="@{/order}" th:object="${item}" method="post">
         <h1 th:text="${item.name}"></h1>
+        <input type="hidden" id="itemId" th:value="${item.id}">
         <div class="form-group">
             <label th:for="price">가격</label>
-            <input type="number" id="price" class="form-control" readonly
-                   th:text="${#numbers.formatInteger(item.price, 3, 'COMMA') + '원'}">
+            <input type="number" th:field="*{price}" class="form-control" readonly>
         </div>
         <div class="form-group">
             <label th:for="description">설명</label>
@@ -21,17 +21,17 @@
         </div>
         <div class="form-group">
             <input type="number" id="count" name="count" class="form-control w-50" style="float:left;"
-                onchange="getTotalPrice();">
+                onchange="getTotalPrice();" th:value="0">
             <label th:for="count">개</label>
         </div>
         <div class="form-group">
-            <input id="totalPrice" type="number" class="form-control w-50" style="float:left;" readonly>
+            <input id="totalPrice" type="number" th:value="0" class="form-control w-50" style="float:left;" readonly>
             <label>원</label>
         </div>
 
         <div style="margin-top: 10px;">
             <button type="button" class="btn btn-primary" onclick="">장바구니</button>
-            <button type="submit" class="btn btn-primary">구매하기</button>
+            <button type="button" class="btn btn-primary" onclick="orderItem();">구매하기</button>
         </div>
     </form>
     <div th:replace="fragments/footer :: footer"/>
