@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>오류페이지</title>
+</head>
+<body>
+<div class="container">
+
+    <div class="w-75">
+        <a th:href="@{/}">홈으로</a>
+        <h1>[[${exception}]]</h1>
+        <span>[[${message}]]</span>
+    </div>
+</div>
+</body>
+</html>
