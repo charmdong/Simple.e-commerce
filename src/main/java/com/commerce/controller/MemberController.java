@@ -26,7 +26,7 @@ public class MemberController {
     private static Map<String, String> roles = new HashMap<>();
 
     @GetMapping("/join")
-    public String joinForm (Model model) throws Exception {
+    public String joinForm (Model model) {
         model.addAttribute("memberForm", new MemberForm());
 
         roles.put("USER", "일반");
@@ -37,7 +37,7 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public String join (MemberForm form) throws Exception {
+    public String join (MemberForm form) {
         log.info("memberForm={}", form);
 
         Member member = Member.createMember(form);
@@ -47,15 +47,16 @@ public class MemberController {
     }
 
     @GetMapping
-    public String memberList (Model model) throws Exception {
+    public String memberList (Model model) {
         model.addAttribute("members", memberService.findAllMember());
         return "members/memberList";
     }
 
     @GetMapping("/detail")
-    public String detail (HttpSession session, Model model) throws Exception {
+    public String detail (HttpSession session, Model model) throws RuntimeException {
         SessionVO loginInfo = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
         String id = loginInfo.getId();
+
         MemberDto member = memberService.findMember(id);
         model.addAttribute("member", member);
 
@@ -63,7 +64,7 @@ public class MemberController {
     }
 
     @GetMapping("/edit")
-    public String updateMemberForm(HttpSession session, Model model) throws Exception {
+    public String updateMemberForm(HttpSession session, Model model) throws RuntimeException {
         SessionVO loginInfo = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
         String id = loginInfo.getId();
         MemberDto member = memberService.findMember(id);
@@ -75,7 +76,7 @@ public class MemberController {
     }
 
     @PostMapping("/edit")
-    public String updateMember (HttpSession session, MemberForm form) throws Exception {
+    public String updateMember (HttpSession session, MemberForm form) throws RuntimeException {
         SessionVO loginInfo = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
         String id = loginInfo.getId();
         memberService.updateMember(id, form);
@@ -84,7 +85,7 @@ public class MemberController {
     }
 
     @PostMapping("/delete")
-    public String deleteMember (HttpSession session, @RequestParam String password) throws Exception {
+    public String deleteMember (HttpSession session, @RequestParam String password) throws RuntimeException {
         SessionVO loginInfo = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
         String id = loginInfo.getId();
         memberService.deleteMember(id, password);
