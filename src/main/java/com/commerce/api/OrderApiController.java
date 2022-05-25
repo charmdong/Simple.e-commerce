@@ -24,7 +24,7 @@ public class OrderApiController {
     private final OrderService orderService;
 
     @PostMapping("/order")
-    public ResponseEntity<Map<String, Object>> orderItem(HttpSession session, @RequestBody OrderItemRequest request) {
+    public ResponseEntity<Map<String, Object>> orderItem(HttpSession session, @RequestBody OrderItemRequest request) throws RuntimeException {
 
         SessionVO sessionVO = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
         String userId = sessionVO.getId();
