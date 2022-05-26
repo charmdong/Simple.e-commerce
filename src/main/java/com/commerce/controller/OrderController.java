@@ -1,16 +1,15 @@
 package com.commerce.controller;
 
+import com.commerce.domain.Role;
 import com.commerce.dto.SessionVO;
 import com.commerce.dto.order.OrderDto;
+import com.commerce.repository.OrderSearch;
 import com.commerce.service.OrderService;
 import com.commerce.util.SessionUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -54,10 +53,13 @@ public class OrderController {
      * @return
      */
     @GetMapping("/orders")
-    public String orderList (HttpSession session, Model model) {
+    public String orderList (@ModelAttribute("orderSearch") OrderSearch orderSearch, HttpSession session, Model model) {
         SessionVO sessionVO = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
-        String userId = sessionVO.getId();
-        List<OrderDto> orderList = orderService.findOrdersByMember(userId);
+        if (sessionVO.getRole().equals(Role.USER)) {
+            orderSearch.setUserId(sessionVO.getId());
+        }
+
+        List<OrderDto> orderList = orderService.findOrdersByCondition(orderSearch);
         model.addAttribute("orderList", orderList);
 
         return "order/orderList";

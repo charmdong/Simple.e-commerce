@@ -34,7 +34,7 @@ public class Order extends BaseEntity {
     private LocalDateTime orderDate; // 주문 시간
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus status; // 주문 상태 [ORDER, CANCEL]
+    private OrderStatus orderStatus; // 주문 상태 [ORDER, CANCEL]
 
     // 연관관계 메서드 - 핵심적으로 제어하는 쪽에 위치
     public void setMember(Member member) {
@@ -62,7 +62,7 @@ public class Order extends BaseEntity {
             order.addOrderItem(orderItem);
         }
 
-        order.status = OrderStatus.ORDER;
+        order.orderStatus = OrderStatus.ORDER;
         order.orderDate = LocalDateTime.now();
 
         return order;
@@ -77,7 +77,7 @@ public class Order extends BaseEntity {
             throw new IllegalStateException(ExceptionUtils.ALREADY_SENT);
         }
 
-        this.status = OrderStatus.CANCEL;
+        this.orderStatus = OrderStatus.CANCEL;
         for (OrderItem orderItem: orderItems) {
             orderItem.cancel();
         }

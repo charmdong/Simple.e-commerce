@@ -28,6 +28,6 @@ public class OrderDto {
         this.orderItems = order.getOrderItems().stream().map(OrderItemDto::new).collect(Collectors.toList());
         this.deliveryStatus = order.getDelivery().getStatus();
         this.orderDate = order.getOrderDate();
-        this.orderStatus = order.getStatus();
+        this.orderStatus = order.getOrderStatus();
     }
 }

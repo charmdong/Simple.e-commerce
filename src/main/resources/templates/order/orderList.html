@@ -7,13 +7,13 @@
     <div>
         <div>
             <form th:object="${orderSearch}" class="form-inline">
-                <div class="form-group mb-2">
-                    <input type="text" th:field="*{memberName}" class="form-control" placeholder="회원명"/>
+                <div class="form-group mb-2" th:if="${session.loginInfo.role.name != 'USER'}">
+                    <input type="text" th:field="*{userId}" class="form-control" placeholder="아이디"/>
                 </div>
-                <div class="form-group mx-sm-1 mb-2">
+                <div class="form-group mx-sm-1 mb-2 w-25">
                     <select th:field="*{orderStatus}" class="form-control">
-                        <option value="">주문상태</option>
-                        <option th:each="status : ${T(jpabook.jpashop.domain.OrderStatus).values()}"
+                        <option value="">ALL</option>
+                        <option th:each="status : ${T(com.commerce.domain.OrderStatus).values()}"
                                 th:value="${status}"
                                 th:text="${status}">
                         </option>
@@ -30,22 +30,22 @@
                 <th>대표상품 이름</th>
                 <th>대표상품 주문가격</th>
                 <th>대표상품 주문수량</th>
-                <th>상태</th>
+                <th>주문상태</th>
                 <th>일시</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item : ${orders}">
+            <tr th:each="item : ${orderList}">
                 <td th:text="${item.id}"></td>
                 <td th:text="${item.member.name}"></td>
                 <td th:text="${item.orderItems[0].item.name}"></td>
                 <td th:text="${item.orderItems[0].orderPrice}"></td>
                 <td th:text="${item.orderItems[0].count}"></td>
-                <td th:text="${item.status}"></td>
+                <td th:text="${item.orderStatus}"></td>
                 <td th:text="${item.orderDate}"></td>
                 <td>
-                    <a th:if="${item.status.name() == 'ORDER'}" href="#"
+                    <a th:if="${item.orderStatus.name() == 'ORDER'}" href="#"
                        th:href="'javascript:cancel('+${item.id}+')'"
                        class="btn btn-danger">CANCEL</a>
                 </td>
@@ -60,9 +60,9 @@
     function cancel(id) {
         var form = document.createElement("form");
         form.setAttribute("method", "post");
-        form.setAttribute("action", "/orders/" + id + "/cancel");
+        form.setAttribute("action", "/orders/cancel/" + id);
         document.body.appendChild(form);
         form.submit();
-}
+    }
 </script>
 </html>

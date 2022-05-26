@@ -5,15 +5,19 @@ import com.commerce.dto.order.OrderDto;
 import com.commerce.repository.ItemRepository;
 import com.commerce.repository.MemberRepository;
 import com.commerce.repository.OrderRepository;
+import com.commerce.repository.OrderSearch;
 import com.commerce.util.ExceptionUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -66,11 +70,25 @@ public class OrderService {
 
     /**
      * 주문 조회
-     *
-     * @param userId
+     * @param orderSearch
      * @return
      */
-    public List<OrderDto> findOrdersByMember (String userId) {
-        return orderRepository.findByMemberId(userId).stream().map(OrderDto::new).collect(Collectors.toList());
+    public List<OrderDto> findOrdersByCondition (OrderSearch orderSearch) {
+        log.info("orderSearch={}", orderSearch);
+        String userId = orderSearch.getUserId();
+        OrderStatus orderStatus = orderSearch.getOrderStatus();
+
+        if (StringUtils.hasText(userId) && orderStatus != null) {
+            return orderRepository.findByMemberIdAndOrderStatus(userId, orderStatus).stream().map(OrderDto::new).collect(Collectors.toList());
+        }
+        else if (StringUtils.hasText(userId) && orderStatus == null) {
+            return orderRepository.findByMemberId(userId).stream().map(OrderDto::new).collect(Collectors.toList());
+        }
+        else if (!StringUtils.hasText(userId) && orderStatus != null) {
+            return orderRepository.findByOrderStatus(orderStatus).stream().map(OrderDto::new).collect(Collectors.toList());
+        }
+        else {
+            return orderRepository.findAllWithItem().stream().map(OrderDto::new).collect(Collectors.toList());
+        }
     }
 }
