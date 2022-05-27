@@ -58,8 +58,11 @@
 </body>
 <script>
     function cancel(id) {
+
+        if(!confirm("주문을 취소하시겠습니까?")) return;
+
         var form = document.createElement("form");
-        form.setAttribute("method", "post");
+        form.setAttribute("method", "get");
         form.setAttribute("action", "/orders/cancel/" + id);
         document.body.appendChild(form);
         form.submit();
