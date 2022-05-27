@@ -58,7 +58,8 @@ public class MemberController {
         String id = loginInfo.getId();
 
         MemberDto member = memberService.findMember(id);
-        model.addAttribute("member", member);
+        MemberForm memberForm = MemberForm.createMemberForm(member);
+        model.addAttribute("memberForm", memberForm);
 
         return "members/memberDetail";
     }

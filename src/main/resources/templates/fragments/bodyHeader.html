@@ -7,10 +7,6 @@
         flex-wrap: wrap;
         justify-content: flex-end;
     }
-
-    #userId {
-        font-size: 30px;
-    }
 </style>
 <div class="header" th:fragment="bodyHeader">
     <ul class="nav nav-pills pull-right">
@@ -23,12 +19,9 @@
         </a>
 
         <div id="wrap" class="w-100" th:if="${session.loginInfo != null}">
-            <a id="userId" th:href="@{/members/detail}" th:text="${session.loginInfo.id}"></a>
+            <a th:href="@{/members/detail}" th:text="${session.loginInfo.id}" style="font-size:30px;"></a>
             <a th:href="@{/logout}" role="button" class="btn btn-primary">로그아웃</a>
             <button type="button" class="btn btn-primary">장바구니</button>
         </div>
     </div>
 </div>
-<script>
-
-</script>
