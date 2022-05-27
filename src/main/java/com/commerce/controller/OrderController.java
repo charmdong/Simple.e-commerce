@@ -58,6 +58,9 @@ public class OrderController {
         if (sessionVO.getRole().equals(Role.USER)) {
             orderSearch.setUserId(sessionVO.getId());
         }
+        else if (sessionVO.getRole().equals(Role.SALE)) {
+            // 자신이 판매하는 상품을 구매한 내역만 조회
+        }
 
         List<OrderDto> orderList = orderService.findOrdersByCondition(orderSearch);
         model.addAttribute("orderList", orderList);
