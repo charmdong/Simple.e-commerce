@@ -4,6 +4,7 @@ import com.commerce.domain.Order;
 import com.commerce.domain.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,7 +24,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             " join fetch oi.item i")
     List<Order> findAllWithItem();
 
-    List<Order> findByMemberId(String userId);
+    @Query("select o from Order o" +
+            " join fetch o.member m" +
+            " where m.id = :userId")
+    List<Order> findByMemberId(@Param("userId") String userId);
 
     List<Order> findByOrderStatus(OrderStatus orderStatus);
 
