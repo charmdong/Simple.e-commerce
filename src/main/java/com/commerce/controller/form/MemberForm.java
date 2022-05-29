@@ -17,6 +17,7 @@ public class MemberForm {
     private String city;
     private String street;
     private String zipcode;
+    private String address;
 
     public static MemberForm createMemberForm (MemberDto member) {
         MemberForm memberForm = new MemberForm();
@@ -26,6 +27,7 @@ public class MemberForm {
         memberForm.city = address.getCity();
         memberForm.street = address.getStreet();
         memberForm.zipcode = address.getZipcode();
+        memberForm.address = address.fullAddress();
 
         return memberForm;
     }
