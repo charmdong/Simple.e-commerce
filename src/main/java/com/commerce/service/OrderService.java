@@ -1,11 +1,10 @@
 package com.commerce.service;
 
 import com.commerce.domain.*;
+import com.commerce.dto.order.CartDto;
 import com.commerce.dto.order.OrderDto;
-import com.commerce.repository.ItemRepository;
-import com.commerce.repository.MemberRepository;
-import com.commerce.repository.OrderRepository;
 import com.commerce.repository.OrderSearch;
+import com.commerce.repository.*;
 import com.commerce.util.ExceptionUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +25,7 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final OrderRepository orderRepository;
     private final ItemRepository itemRepository;
+    private final CartRepository cartRepository;
 
     /**
      * 상품 주문
@@ -90,5 +90,37 @@ public class OrderService {
         else {
             return orderRepository.findAllWithItem().stream().map(OrderDto::new).collect(Collectors.toList());
         }
+    }
+
+    /**
+     * 장바구니 추가
+     * @param userId
+     * @param itemId
+     * @param count
+     */
+    public CartDto addCart (String userId, Long itemId, int count) {
+
+        Member member = memberRepository.findById(userId).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.USER_NOT_FOUND));
+        Item item = itemRepository.findById(itemId).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.ITEM_NOT_FOUND));
+
+        Cart cart = Cart.createCart(member, item, count);
+        cartRepository.save(cart);
+
+        return new CartDto(cart);
+    }
+
+    public List<CartDto> findCartByUserId (String userId) {
+        return cartRepository.findAllByUserId(userId).stream().map(CartDto::new).collect(Collectors.toList());
+    }
+
+    public void updateCart () {
+
+    }
+
+    public void removeCart (String userId, Long itemId) {
+        Member member = memberRepository.findById(userId).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.USER_NOT_FOUND));
+        Item item = itemRepository.findById(itemId).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.ITEM_NOT_FOUND));
+
+        cartRepository.deleteByMemberAndItem(member, item);
     }
 }
