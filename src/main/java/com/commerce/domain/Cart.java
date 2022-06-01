@@ -22,7 +22,7 @@ public class Cart {
     private Item item;
     private int count;
 
-    public static Cart createCart(Member member, Item item, int count) {
+    public static Cart createCart (Member member, Item item, int count) {
 
         Cart cart = new Cart();
 
@@ -33,4 +33,7 @@ public class Cart {
         return cart;
     }
 
+    public void updateCart (int count) {
+        this.count = count;
+    }
 }
