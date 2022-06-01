@@ -109,14 +109,30 @@ public class OrderService {
         return new CartDto(cart);
     }
 
+    /**
+     * 장바구니 목록 조회
+     * @param userId
+     * @return
+     */
     public List<CartDto> findCartByUserId (String userId) {
         return cartRepository.findAllByUserId(userId).stream().map(CartDto::new).collect(Collectors.toList());
     }
 
-    public void updateCart () {
-
+    /**
+     * 장바구니 수정
+     * @param cartId
+     * @param count
+     */
+    public void updateCart (Long cartId, int count) {
+        Cart cart = cartRepository.findById(cartId).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.CART_NOT_FOUND));
+        cart.updateCart(count);
     }
 
+    /**
+     * 장바구니 삭제
+     * @param userId
+     * @param itemId
+     */
     public void removeCart (String userId, Long itemId) {
         Member member = memberRepository.findById(userId).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.USER_NOT_FOUND));
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.ITEM_NOT_FOUND));

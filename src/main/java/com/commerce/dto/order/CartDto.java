@@ -3,9 +3,11 @@ package com.commerce.dto.order;
 import com.commerce.domain.Cart;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
+@ToString
 public class CartDto {
 
     private Long cartId;
