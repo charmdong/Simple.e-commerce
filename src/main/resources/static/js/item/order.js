@@ -26,3 +26,20 @@
             }
         });
     }
+
+    function addCart() {
+        let param = {};
+        param.itemId = $('#itemId').val();
+        param.count = $('#count').val();
+
+        $.ajax({
+            type: "POST",
+            url: "/api/cart",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(param),
+            success: function(response) {
+                alert(response.message);
+            }
+        });
+    }

@@ -73,6 +73,7 @@ public class OrderService {
      * @param orderSearch
      * @return
      */
+    @Transactional(readOnly = true)
     public List<OrderDto> findOrdersByCondition (OrderSearch orderSearch) {
         log.info("orderSearch={}", orderSearch);
         String userId = orderSearch.getUserId();
@@ -114,6 +115,7 @@ public class OrderService {
      * @param userId
      * @return
      */
+    @Transactional(readOnly = true)
     public List<CartDto> findCartByUserId (String userId) {
         return cartRepository.findAllByUserId(userId).stream().map(CartDto::new).collect(Collectors.toList());
     }
