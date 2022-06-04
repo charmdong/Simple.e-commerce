@@ -35,9 +35,9 @@
         $.ajax({
             type: "POST",
             url: "/api/cart",
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify(param),
+            //contentType: "application/json",
+            dataType: "text",
+            data: param,
             success: function(response) {
                 alert(response.message);
             }
