@@ -21,16 +21,16 @@
         </div>
         <div class="form-group">
             <input type="number" id="count" name="count" class="form-control w-50" style="float:left;"
-                onchange="getTotalPrice();" th:value="0">
+                onchange="getTotalPrice();" th:value="1">
             <label th:for="count">개</label>
         </div>
         <div class="form-group">
-            <input id="totalPrice" type="number" th:value="0" class="form-control w-50" style="float:left;" readonly>
+            <input id="totalPrice" type="number" th:value="*{price}" class="form-control w-50" style="float:left;" readonly>
             <label>원</label>
         </div>
 
         <div style="margin-top: 10px;">
-            <button type="button" class="btn btn-primary" onclick="addCart();">장바구니</button>
+            <button type="button" class="btn btn-primary" onclick="isCartDuplicated();">장바구니</button>
             <button type="button" class="btn btn-primary" onclick="orderItem();">구매하기</button>
         </div>
     </form>

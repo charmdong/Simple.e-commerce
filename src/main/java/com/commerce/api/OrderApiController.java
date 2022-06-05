@@ -43,6 +43,32 @@ public class OrderApiController {
     }
 
     /**
+     * 장바구니 중복 여부 확인
+     * @param session
+     * @param itemId
+     * @return
+     */
+    @GetMapping("/cart/{itemId}")
+    public ResponseEntity<Map<String, Object>> isCartDuplicated (HttpSession session,
+                                                                 @PathVariable("itemId") Long itemId) {
+        SessionVO sessionVO = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
+        String userId = sessionVO.getId();
+
+        Boolean result = orderService.isCartDuplicated(userId, itemId);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", result);
+
+        String message = "SUCCESS";
+        if (result == true) {
+            message = "이미 장바구니에 존재합니다.";
+        }
+        response.put("message", message);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
      * 장바구니 추가
      * @param session
      * @param itemId
@@ -60,7 +86,7 @@ public class OrderApiController {
         CartDto cartDto = orderService.addCart(userId, itemId, count);
         Map<String, Object> result = new HashMap<>();
         result.put("data", cartDto);
-        result.put("message", "SUCCESS");
+        result.put("message", "장바구니에 담았습니다.");
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

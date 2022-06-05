@@ -94,6 +94,25 @@ public class OrderService {
     }
 
     /**
+     * 아이템 장바구니 중복 여부 확인
+     * @param userId
+     * @param itemId
+     * @return
+     */
+    public Boolean isCartDuplicated (String userId, Long itemId) {
+
+        Member member = memberRepository.findById(userId).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.USER_NOT_FOUND));
+        Item item = itemRepository.findById(itemId).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.ITEM_NOT_FOUND));
+        Cart cart = cartRepository.findByItemAndMember(item, member);
+
+        if (cart != null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * 장바구니 추가
      * @param userId
      * @param itemId
