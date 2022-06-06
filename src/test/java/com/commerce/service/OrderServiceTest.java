@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class OrderServiceTest {
 
     @Autowired
-    OrderService orderService;
+    CartService cartService;
 
     @Autowired
     CartRepository cartRepository;
@@ -30,7 +30,7 @@ class OrderServiceTest {
         Long itemId = 2L;
         int count = 2;
 
-        CartDto cartDto = orderService.addCart(userId, itemId, count);
+        CartDto cartDto = cartService.addCart(userId, itemId, count);
 
         assertThat(cartDto.getItemId()).isEqualTo(2L);
     }
@@ -38,7 +38,7 @@ class OrderServiceTest {
     @Test
     void findCartTest () {
         String userId = "sale";
-        List<CartDto> cartList = orderService.findCartByUserId(userId);
+        List<CartDto> cartList = cartService.findCartByUserId(userId);
 
         assertThat(cartList.size()).isEqualTo(1);
     }
@@ -46,7 +46,7 @@ class OrderServiceTest {
     @Test
     @Rollback(value = false)
     void updateCartTest () {
-        orderService.updateCart(14L, 4);
+        cartService.updateCart(14L, 4);
         Cart result = cartRepository.findById(14L).get();
         assertThat(result.getCount()).isEqualTo(4);
     }
@@ -57,8 +57,8 @@ class OrderServiceTest {
         String userId = "sale";
         Long itemId = 2L;
 
-        orderService.removeCart(userId, itemId);
-        List<CartDto> result = orderService.findCartByUserId(userId);
+        cartService.removeCart(userId, itemId);
+        List<CartDto> result = cartService.findCartByUserId(userId);
 
         assertThat(result.size()).isEqualTo(0);
     }
