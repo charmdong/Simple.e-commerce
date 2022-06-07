@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,10 +26,9 @@ public class CartApiController {
      * @return
      */
     @GetMapping("/{itemId}")
-    public ResponseEntity<Map<String, Object>> isCartDuplicated (HttpSession session,
+    public ResponseEntity<Map<String, Object>> isCartDuplicated (@SessionAttribute(name = SessionUtils.LOGIN_SESSION) SessionVO session,
                                                                  @PathVariable("itemId") Long itemId) {
-        SessionVO sessionVO = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
-        String userId = sessionVO.getId();
+        String userId = session.getId();
 
         Boolean result = cartService.isCartDuplicated(userId, itemId);
 
@@ -54,12 +52,10 @@ public class CartApiController {
      * @return
      */
     @PostMapping
-    public ResponseEntity<Map<String, Object>> addCart (HttpSession session,
+    public ResponseEntity<Map<String, Object>> addCart (@SessionAttribute(name = SessionUtils.LOGIN_SESSION) SessionVO session,
                                                         @RequestParam("itemId") Long itemId,
                                                         @RequestParam("count") int count) {
-
-        SessionVO sessionVO = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
-        String userId = sessionVO.getId();
+        String userId = session.getId();
 
         CartDto cartDto = cartService.addCart(userId, itemId, count);
         Map<String, Object> result = new HashMap<>();
@@ -70,9 +66,7 @@ public class CartApiController {
     }
 
     @PatchMapping("/{cartId}")
-    public ResponseEntity<Map<String, Object>> updateCart (HttpSession session,
-                                                           @PathVariable("cartId") Long cartId,
-                                                           @RequestParam("count") int count) {
+    public ResponseEntity<Map<String, Object>> updateCart (@PathVariable("cartId") Long cartId, @RequestParam("count") int count) {
 
         cartService.updateCart(cartId, count);
         Map<String, Object> result = new HashMap<>();
@@ -89,10 +83,9 @@ public class CartApiController {
      * @return
      */
     @DeleteMapping
-    public ResponseEntity<Map<String, Object>> removeCart (HttpSession session,
+    public ResponseEntity<Map<String, Object>> removeCart (@SessionAttribute(name = SessionUtils.LOGIN_SESSION) SessionVO session,
                                                            @RequestParam("itemId") Long itemId) {
-        SessionVO sessionVO = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
-        String userId = sessionVO.getId();
+        String userId = session.getId();
 
         cartService.removeCart(userId, itemId);
         Map<String, Object> result = new HashMap<>();
