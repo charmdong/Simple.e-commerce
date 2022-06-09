@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>상품명</th>
+                <th>가격</th>
+                <th>주문 수량</th>
+                <th>주문금액</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cart : ${cartList}">
+                <td th:text="${cart.itemName}"></td>
+                <td th:text="${cart.price}"></td>
+                <td th:text="${cart.count}"></td>
+                <td th:text="${cart.price * cart.count}"></td>
+                <td>
+                    <a th:href="'javascript:cancel('+${cart.id}+')'" class="btn btn-danger">삭제</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"/>
+</div>
+<script>
+    function cancel(cartId) {
+        if(!confirm("장바구니에서 삭제하시겠습니까?")) return;
+
+        $.ajax({
+            type: "DELETE",
+            url: "/api/cart?cardId=" + cartId,
+            dataType: "json",
+            success: function(response) {
+                if(response.data == true) {
+                    alert(response.message);
+                    windows.location.href = '/carts';
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

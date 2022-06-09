@@ -88,13 +88,9 @@ public class CartService {
 
     /**
      * 장바구니 삭제
-     * @param userId
-     * @param itemId
+     * @param cartId
      */
-    public void removeCart (String userId, Long itemId) {
-        Member member = memberRepository.findById(userId).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.USER_NOT_FOUND));
-        Item item = itemRepository.findById(itemId).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.ITEM_NOT_FOUND));
-
-        cartRepository.deleteByMemberAndItem(member, item);
+    public void removeCart (Long cartId) {
+        cartRepository.deleteById(cartId);
     }
 }

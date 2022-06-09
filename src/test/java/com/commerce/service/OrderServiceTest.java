@@ -51,15 +51,4 @@ class OrderServiceTest {
         assertThat(result.getCount()).isEqualTo(4);
     }
 
-    @Test
-    @Rollback(value = false)
-    void removeCartTest () {
-        String userId = "sale";
-        Long itemId = 2L;
-
-        cartService.removeCart(userId, itemId);
-        List<CartDto> result = cartService.findCartByUserId(userId);
-
-        assertThat(result.size()).isEqualTo(0);
-    }
 }

@@ -79,18 +79,17 @@ public class CartApiController {
     /**
      * 장바구니 삭제
      * @param session
-     * @param itemId
+     * @param cartId
      * @return
      */
     @DeleteMapping
     public ResponseEntity<Map<String, Object>> removeCart (@SessionAttribute(name = SessionUtils.LOGIN_SESSION) SessionVO session,
-                                                           @RequestParam("itemId") Long itemId) {
-        String userId = session.getId();
+                                                           @RequestParam("cartId") Long cartId) {
 
-        cartService.removeCart(userId, itemId);
+        cartService.removeCart(cartId);
         Map<String, Object> result = new HashMap<>();
         result.put("data", true);
-        result.put("message", "장바구니에 추가되었습니다.");
+        result.put("message", "장바구니에서 삭제되었습니다.");
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
