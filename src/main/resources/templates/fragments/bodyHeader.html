@@ -21,7 +21,7 @@
         <div id="wrap" class="w-100" th:if="${session.loginInfo != null}">
             <a th:href="@{/members/detail}" th:text="${session.loginInfo.id}" style="font-size:30px;"></a>
             <a th:href="@{/logout}" role="button" class="btn btn-primary">로그아웃</a>
-            <button type="button" class="btn btn-primary">장바구니</button>
+            <a th:href="@{/carts}" role="button" class="btn btn-primary">장바구니</a>
         </div>
     </div>
 </div>

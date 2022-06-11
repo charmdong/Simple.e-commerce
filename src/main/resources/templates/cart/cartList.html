@@ -39,12 +39,12 @@
 
         $.ajax({
             type: "DELETE",
-            url: "/api/cart?cardId=" + cartId,
+            url: "/api/cart?cartId=" + cartId,
             dataType: "json",
             success: function(response) {
                 if(response.data == true) {
                     alert(response.message);
-                    windows.location.href = '/carts';
+                    window.location.href = '/carts';
                 }
             }
         });
