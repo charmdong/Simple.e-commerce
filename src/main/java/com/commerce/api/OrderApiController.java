@@ -1,7 +1,7 @@
 package com.commerce.api;
 
-import com.commerce.dto.SessionVO;
-import com.commerce.dto.order.OrderItemRequest;
+import com.commerce.vo.SessionVO;
+import com.commerce.vo.order.OrderItemRequest;
 import com.commerce.service.OrderService;
 import com.commerce.util.SessionUtils;
 import lombok.RequiredArgsConstructor;

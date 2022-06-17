@@ -2,8 +2,8 @@ package com.commerce.controller;
 
 import com.commerce.controller.form.MemberForm;
 import com.commerce.domain.Member;
-import com.commerce.dto.SessionVO;
-import com.commerce.dto.member.MemberDto;
+import com.commerce.vo.SessionVO;
+import com.commerce.vo.member.MemberVO;
 import com.commerce.service.MemberService;
 import com.commerce.util.SessionUtils;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +57,7 @@ public class MemberController {
         SessionVO loginInfo = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
         String id = loginInfo.getId();
 
-        MemberDto member = memberService.findMember(id);
+        MemberVO member = memberService.findMember(id);
         MemberForm memberForm = MemberForm.createMemberForm(member);
         model.addAttribute("memberForm", memberForm);
 
@@ -68,7 +68,7 @@ public class MemberController {
     public String updateMemberForm(HttpSession session, Model model) throws RuntimeException {
         SessionVO loginInfo = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
         String id = loginInfo.getId();
-        MemberDto member = memberService.findMember(id);
+        MemberVO member = memberService.findMember(id);
 
         MemberForm memberForm = MemberForm.createMemberForm(member);
         model.addAttribute("form", memberForm);

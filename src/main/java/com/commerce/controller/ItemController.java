@@ -3,9 +3,9 @@ package com.commerce.controller;
 import com.commerce.controller.form.ItemForm;
 import com.commerce.domain.Item;
 import com.commerce.domain.Role;
-import com.commerce.dto.CategoryDto;
-import com.commerce.dto.ItemDto;
-import com.commerce.dto.SessionVO;
+import com.commerce.vo.CategoryVO;
+import com.commerce.vo.ItemVO;
+import com.commerce.vo.SessionVO;
 import com.commerce.service.CategoryService;
 import com.commerce.service.ItemService;
 import com.commerce.util.SessionUtils;
@@ -34,7 +34,7 @@ public class ItemController {
      */
     @GetMapping("/new")
     public String createForm (Model model) {
-        List<CategoryDto> categoryList = categoryService.categoryList();
+        List<CategoryVO> categoryList = categoryService.categoryList();
 
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("form", new ItemForm());
@@ -66,7 +66,7 @@ public class ItemController {
     public String getItemList (HttpSession session, Model model) {
         SessionVO loginInfo = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
 
-        List<ItemDto> items = new ArrayList<>();
+        List<ItemVO> items = new ArrayList<>();
 
         // 판매자인 경우
         if (loginInfo.getRole() == Role.SALE) {
@@ -92,7 +92,7 @@ public class ItemController {
     public String itemDetail (@PathVariable("itemId") Long id, HttpSession session, Model model) {
         SessionVO loginInfo = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
 
-        ItemDto item = itemService.findOne(id);
+        ItemVO item = itemService.findOne(id);
         model.addAttribute("item", item);
 
         // 일반 사용자의 경우 상품을 주문할 수 있는 화면으로 이동
@@ -112,7 +112,7 @@ public class ItemController {
      */
     @GetMapping("{itemId}/edit")
     public String updateItemForm (@PathVariable("itemId") Long id, Model model) {
-        ItemDto item = itemService.findOne(id);
+        ItemVO item = itemService.findOne(id);
         ItemForm itemForm = ItemForm.createItemForm(item);
         model.addAttribute("form", itemForm);
 

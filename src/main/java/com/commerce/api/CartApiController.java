@@ -1,7 +1,7 @@
 package com.commerce.api;
 
-import com.commerce.dto.SessionVO;
-import com.commerce.dto.order.CartDto;
+import com.commerce.vo.SessionVO;
+import com.commerce.vo.order.CartVO;
 import com.commerce.service.CartService;
 import com.commerce.util.SessionUtils;
 import lombok.RequiredArgsConstructor;
@@ -57,9 +57,9 @@ public class CartApiController {
                                                         @RequestParam("count") int count) {
         String userId = session.getId();
 
-        CartDto cartDto = cartService.addCart(userId, itemId, count);
+        CartVO cartVO = cartService.addCart(userId, itemId, count);
         Map<String, Object> result = new HashMap<>();
-        result.put("data", cartDto);
+        result.put("data", cartVO);
         result.put("message", "장바구니에 담았습니다.");
 
         return new ResponseEntity<>(result, HttpStatus.OK);

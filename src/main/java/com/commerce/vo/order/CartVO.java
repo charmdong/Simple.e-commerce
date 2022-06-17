@@ -1,4 +1,4 @@
-package com.commerce.dto.order;
+package com.commerce.vo.order;
 
 import com.commerce.domain.Cart;
 import lombok.Data;
@@ -8,7 +8,7 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @ToString
-public class CartDto {
+public class CartVO {
 
     private Long id;
     private Long itemId;
@@ -16,7 +16,7 @@ public class CartDto {
     private int price;
     private int count;
 
-    public CartDto(Cart cart) {
+    public CartVO (Cart cart) {
         this.id = cart.getId();
         this.itemId = cart.getItem().getId();
         this.itemName = cart.getItem().getName();

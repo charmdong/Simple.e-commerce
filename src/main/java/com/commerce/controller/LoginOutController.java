@@ -1,8 +1,8 @@
 package com.commerce.controller;
 
 import com.commerce.controller.form.LoginForm;
-import com.commerce.dto.SessionVO;
-import com.commerce.dto.member.MemberDto;
+import com.commerce.vo.SessionVO;
+import com.commerce.vo.member.MemberVO;
 import com.commerce.service.MemberService;
 import com.commerce.util.SessionUtils;
 import lombok.RequiredArgsConstructor;
@@ -39,12 +39,12 @@ public class LoginOutController {
         Map<String, Object> result = new HashMap<>();
 
         try {
-            MemberDto memberDto = memberService.login(form.getId(), form.getPassword());
+            MemberVO memberVO = memberService.login(form.getId(), form.getPassword());
 
             HttpSession session = request.getSession();
             SessionVO loginInfo = new SessionVO();
-            loginInfo.setId(memberDto.getId());
-            loginInfo.setRole(memberDto.getRole());
+            loginInfo.setId(memberVO.getId());
+            loginInfo.setRole(memberVO.getRole());
 
             log.info("loginInfo={}", loginInfo);
 

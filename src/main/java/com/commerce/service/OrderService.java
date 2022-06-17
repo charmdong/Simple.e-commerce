@@ -1,7 +1,7 @@
 package com.commerce.service;
 
 import com.commerce.domain.*;
-import com.commerce.dto.order.OrderDto;
+import com.commerce.vo.order.OrderVO;
 import com.commerce.repository.OrderSearch;
 import com.commerce.repository.*;
 import com.commerce.util.ExceptionUtils;
@@ -72,22 +72,22 @@ public class OrderService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<OrderDto> findOrdersByCondition (OrderSearch orderSearch) {
+    public List<OrderVO> findOrdersByCondition (OrderSearch orderSearch) {
         log.info("orderSearch={}", orderSearch);
         String userId = orderSearch.getUserId();
         OrderStatus orderStatus = orderSearch.getOrderStatus();
 
         if (StringUtils.hasText(userId) && orderStatus != null) {
-            return orderRepository.findByMemberIdAndOrderStatus(userId, orderStatus).stream().map(OrderDto::new).collect(Collectors.toList());
+            return orderRepository.findByMemberIdAndOrderStatus(userId, orderStatus).stream().map(OrderVO::new).collect(Collectors.toList());
         }
         else if (StringUtils.hasText(userId) && orderStatus == null) {
-            return orderRepository.findByMemberId(userId).stream().map(OrderDto::new).collect(Collectors.toList());
+            return orderRepository.findByMemberId(userId).stream().map(OrderVO::new).collect(Collectors.toList());
         }
         else if (!StringUtils.hasText(userId) && orderStatus != null) {
-            return orderRepository.findByOrderStatus(orderStatus).stream().map(OrderDto::new).collect(Collectors.toList());
+            return orderRepository.findByOrderStatus(orderStatus).stream().map(OrderVO::new).collect(Collectors.toList());
         }
         else {
-            return orderRepository.findAllWithItem().stream().map(OrderDto::new).collect(Collectors.toList());
+            return orderRepository.findAllWithItem().stream().map(OrderVO::new).collect(Collectors.toList());
         }
     }
 

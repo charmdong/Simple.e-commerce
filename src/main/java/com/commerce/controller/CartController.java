@@ -1,7 +1,7 @@
 package com.commerce.controller;
 
-import com.commerce.dto.SessionVO;
-import com.commerce.dto.order.CartDto;
+import com.commerce.vo.SessionVO;
+import com.commerce.vo.order.CartVO;
 import com.commerce.service.CartService;
 import com.commerce.util.SessionUtils;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class CartController {
     @GetMapping("/carts")
     public String cartList(@SessionAttribute(name = SessionUtils.LOGIN_SESSION) SessionVO session, Model model) {
         String userId = session.getId();
-        List<CartDto> cartList = cartService.findCartByUserId(userId);
+        List<CartVO> cartList = cartService.findCartByUserId(userId);
 
         model.addAttribute("cartList", cartList);
         return "cart/cartList";

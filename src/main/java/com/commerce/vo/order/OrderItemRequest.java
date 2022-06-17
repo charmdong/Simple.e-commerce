@@ -1,4 +1,4 @@
-package com.commerce.dto.order;
+package com.commerce.vo.order;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

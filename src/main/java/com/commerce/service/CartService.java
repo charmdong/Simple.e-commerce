@@ -3,7 +3,7 @@ package com.commerce.service;
 import com.commerce.domain.Cart;
 import com.commerce.domain.Item;
 import com.commerce.domain.Member;
-import com.commerce.dto.order.CartDto;
+import com.commerce.vo.order.CartVO;
 import com.commerce.repository.CartRepository;
 import com.commerce.repository.ItemRepository;
 import com.commerce.repository.MemberRepository;
@@ -55,7 +55,7 @@ public class CartService {
      * @param itemId
      * @param count
      */
-    public CartDto addCart (String userId, Long itemId, int count) {
+    public CartVO addCart (String userId, Long itemId, int count) {
 
         Member member = memberRepository.findById(userId).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.USER_NOT_FOUND));
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.ITEM_NOT_FOUND));
@@ -63,7 +63,7 @@ public class CartService {
         Cart cart = Cart.createCart(member, item, count);
         cartRepository.save(cart);
 
-        return new CartDto(cart);
+        return new CartVO(cart);
     }
 
     /**
@@ -72,8 +72,8 @@ public class CartService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<CartDto> findCartByUserId (String userId) {
-        return cartRepository.findAllByUserId(userId).stream().map(CartDto::new).collect(Collectors.toList());
+    public List<CartVO> findCartByUserId (String userId) {
+        return cartRepository.findAllByUserId(userId).stream().map(CartVO::new).collect(Collectors.toList());
     }
 
     /**

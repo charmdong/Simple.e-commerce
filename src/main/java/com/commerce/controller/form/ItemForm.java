@@ -1,7 +1,7 @@
 package com.commerce.controller.form;
 
-import com.commerce.dto.CategoryDto;
-import com.commerce.dto.ItemDto;
+import com.commerce.vo.CategoryVO;
+import com.commerce.vo.ItemVO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,9 +17,9 @@ public class ItemForm {
     private Integer stockQuantity;
     private String companyName;
     private String description;
-    private List<CategoryDto> categories;
+    private List<CategoryVO> categories;
 
-    public static ItemForm createItemForm(ItemDto item) {
+    public static ItemForm createItemForm(ItemVO item) {
         ItemForm itemForm = new ItemForm();
 
         itemForm.setId(item.getId());

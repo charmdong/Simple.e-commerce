@@ -2,7 +2,7 @@ package com.commerce.service;
 
 import com.commerce.controller.form.ItemForm;
 import com.commerce.domain.Item;
-import com.commerce.dto.ItemDto;
+import com.commerce.vo.ItemVO;
 import com.commerce.repository.ItemRepository;
 import com.commerce.util.ExceptionUtils;
 import lombok.RequiredArgsConstructor;
@@ -38,18 +38,18 @@ public class ItemService {
         itemRepository.deleteById(id);
     }
 
-    public ItemDto findOne(Long id) {
+    public ItemVO findOne(Long id) {
         Item findItem = itemRepository.findById(id).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.ITEM_NOT_FOUND));
-        return new ItemDto(findItem);
+        return new ItemVO(findItem);
     }
 
-    public List<ItemDto> findItems(String memberId) {
+    public List<ItemVO> findItems(String memberId) {
         List<Item> itemList = itemRepository.findByRegId(memberId);
-        return itemList.stream().map(ItemDto::new).collect(Collectors.toList());
+        return itemList.stream().map(ItemVO::new).collect(Collectors.toList());
     }
 
-    public List<ItemDto> findAllItems () {
+    public List<ItemVO> findAllItems () {
         List<Item> itemList = itemRepository.findAll();
-        return itemList.stream().map(ItemDto::new).collect(Collectors.toList());
+        return itemList.stream().map(ItemVO::new).collect(Collectors.toList());
     }
 }

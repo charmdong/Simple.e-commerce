@@ -2,7 +2,7 @@ package com.commerce.service;
 
 import com.commerce.controller.form.MemberForm;
 import com.commerce.domain.Member;
-import com.commerce.dto.member.MemberDto;
+import com.commerce.vo.member.MemberVO;
 import com.commerce.repository.MemberRepository;
 import com.commerce.util.ExceptionUtils;
 import lombok.RequiredArgsConstructor;
@@ -20,25 +20,25 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public MemberDto login (String id, String password) {
+    public MemberVO login (String id, String password) {
         Member member = memberRepository.findById(id).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.USER_NOT_FOUND));
 
         if (!member.getPassword().equals(password)) {
             throw new IllegalArgumentException(ExceptionUtils.INCORRECT_PWD);
         }
 
-        return new MemberDto(member);
+        return new MemberVO(member);
     }
 
     @Transactional(readOnly = true)
-    public MemberDto findMember (String id) {
+    public MemberVO findMember (String id) {
         Member member = memberRepository.findById(id).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.USER_NOT_FOUND));
-        return new MemberDto(member);
+        return new MemberVO(member);
     }
 
     @Transactional(readOnly = true)
-    public List<MemberDto> findAllMember () {
-        return memberRepository.findAll().stream().map(MemberDto::new).collect(Collectors.toList());
+    public List<MemberVO> findAllMember () {
+        return memberRepository.findAll().stream().map(MemberVO::new).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)

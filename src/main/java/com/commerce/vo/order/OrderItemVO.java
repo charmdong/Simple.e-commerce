@@ -1,20 +1,20 @@
-package com.commerce.dto.order;
+package com.commerce.vo.order;
 
 import com.commerce.domain.OrderItem;
-import com.commerce.dto.ItemDto;
+import com.commerce.vo.ItemVO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class OrderItemDto {
+public class OrderItemVO {
 
-    private ItemDto item;
+    private ItemVO item;
     private Integer orderPrice;
     private Integer count;
 
-    public OrderItemDto(OrderItem item) {
-        this.item = new ItemDto(item.getItem());
+    public OrderItemVO (OrderItem item) {
+        this.item = new ItemVO(item.getItem());
         this.orderPrice = item.getOrderPrice();
         this.count = item.getCount();
     }

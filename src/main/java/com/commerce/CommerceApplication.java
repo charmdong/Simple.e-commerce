@@ -1,6 +1,6 @@
 package com.commerce;
 
-import com.commerce.dto.SessionVO;
+import com.commerce.vo.SessionVO;
 import com.commerce.util.SessionUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

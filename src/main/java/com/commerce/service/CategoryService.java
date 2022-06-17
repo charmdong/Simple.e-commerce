@@ -1,6 +1,6 @@
 package com.commerce.service;
 
-import com.commerce.dto.CategoryDto;
+import com.commerce.vo.CategoryVO;
 import com.commerce.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public List<CategoryDto> categoryList() {
-        return categoryRepository.findAll().stream().map(CategoryDto::new).collect(Collectors.toList());
+    public List<CategoryVO> categoryList() {
+        return categoryRepository.findAll().stream().map(CategoryVO::new).collect(Collectors.toList());
     }
 }

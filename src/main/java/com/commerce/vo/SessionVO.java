@@ -1,4 +1,4 @@
-package com.commerce.dto;
+package com.commerce.vo;
 
 import com.commerce.domain.Role;
 import lombok.Data;

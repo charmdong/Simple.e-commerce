@@ -2,7 +2,7 @@ package com.commerce.controller.form;
 
 import com.commerce.domain.Address;
 import com.commerce.domain.Role;
-import com.commerce.dto.member.MemberDto;
+import com.commerce.vo.member.MemberVO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +19,7 @@ public class MemberForm {
     private String zipcode;
     private String address;
 
-    public static MemberForm createMemberForm (MemberDto member) {
+    public static MemberForm createMemberForm (MemberVO member) {
         MemberForm memberForm = new MemberForm();
 
         memberForm.name = member.getName();

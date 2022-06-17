@@ -1,7 +1,7 @@
 package com.commerce.service;
 
 import com.commerce.domain.Cart;
-import com.commerce.dto.order.CartDto;
+import com.commerce.vo.order.CartVO;
 import com.commerce.repository.CartRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +30,15 @@ class OrderServiceTest {
         Long itemId = 2L;
         int count = 2;
 
-        CartDto cartDto = cartService.addCart(userId, itemId, count);
+        CartVO cartVO = cartService.addCart(userId, itemId, count);
 
-        assertThat(cartDto.getItemId()).isEqualTo(2L);
+        assertThat(cartVO.getItemId()).isEqualTo(2L);
     }
 
     @Test
     void findCartTest () {
         String userId = "sale";
-        List<CartDto> cartList = cartService.findCartByUserId(userId);
+        List<CartVO> cartList = cartService.findCartByUserId(userId);
 
         assertThat(cartList.size()).isEqualTo(1);
     }

@@ -1,8 +1,8 @@
 package com.commerce.controller;
 
 import com.commerce.domain.Role;
-import com.commerce.dto.SessionVO;
-import com.commerce.dto.order.OrderDto;
+import com.commerce.vo.SessionVO;
+import com.commerce.vo.order.OrderVO;
 import com.commerce.repository.OrderSearch;
 import com.commerce.service.OrderService;
 import com.commerce.util.SessionUtils;
@@ -62,7 +62,7 @@ public class OrderController {
             // 자신이 판매하는 상품을 구매한 내역만 조회
         }
 
-        List<OrderDto> orderList = orderService.findOrdersByCondition(orderSearch);
+        List<OrderVO> orderList = orderService.findOrdersByCondition(orderSearch);
         model.addAttribute("orderList", orderList);
 
         return "order/orderList";
