@@ -33,22 +33,6 @@
 
     <div th:replace="fragments/footer :: footer"/>
 </div>
-<script>
-    function cancel(cartId) {
-        if(!confirm("장바구니에서 삭제하시겠습니까?")) return;
-
-        $.ajax({
-            type: "DELETE",
-            url: "/api/cart?cartId=" + cartId,
-            dataType: "json",
-            success: function(response) {
-                if(response.data == true) {
-                    alert(response.message);
-                    window.location.href = '/carts';
-                }
-            }
-        });
-    }
-</script>
+<script type="text/javascript" src="/js/cart/list.js"></script>
 </body>
 </html>
