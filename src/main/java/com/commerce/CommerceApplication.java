@@ -1,7 +1,8 @@
 package com.commerce;
 
-import com.commerce.vo.SessionVO;
 import com.commerce.util.SessionUtils;
+import com.commerce.vo.SessionVO;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.persistence.EntityManager;
 import java.util.Optional;
 
 @EnableJpaAuditing
@@ -39,5 +41,10 @@ public class CommerceApplication {
             }
             return Optional.of("Anonymous");
         };
+    }
+
+    @Bean
+    public JPAQueryFactory jpaQueryFactory(EntityManager em) {
+        return new JPAQueryFactory(em);
     }
 }
