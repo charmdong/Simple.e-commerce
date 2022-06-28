@@ -6,8 +6,12 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import static com.commerce.domain.QDelivery.delivery;
+import static com.commerce.domain.QItem.item;
+import static com.commerce.domain.QMember.member;
 import static com.commerce.domain.QOrder.order;
 import static com.commerce.domain.QOrderItem.orderItem;
+
 
 @RequiredArgsConstructor
 public class OrderRepositoryImpl implements OrderRepositoryCustom {
@@ -16,33 +20,37 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
     @Override
     public List<Order> findAllWithMemberDelivery () {
-        return null;
+        return queryFactory.selectFrom(order)
+                .innerJoin(order.member, member).fetchJoin()
+                .innerJoin(order.delivery, delivery).fetchJoin()
+                .fetch();
     }
 
     @Override
     public List<Order> findAllWithItem () {
-        return queryFactory.select(order)
-                .from(order)
-                .leftJoin(order.member).fetchJoin()
-                .leftJoin(order.delivery).fetchJoin()
-                .leftJoin(order.orderItems).fetchJoin()
-                .leftJoin(orderItem).fetchJoin()
-                .distinct().fetch();
+        return queryFactory.selectFrom(order)
+                .innerJoin(order.member, member).fetchJoin()
+                .innerJoin(order.delivery, delivery).fetchJoin()
+                .innerJoin(order.orderItems, orderItem).fetchJoin()
+                .innerJoin(orderItem.item, item)
+                .distinct()
+                .fetch();
     }
 
     @Override
     public List<Order> findByRegId (String regId) {
-        return queryFactory.selectFrom(order)
-                .innerJoin(order.orderItems)
-                .innerJoin(orderItem)
-                .where(order.regId.eq(regId))
+        return queryFactory.select(order)
+                .from(order)
+                .innerJoin(order.orderItems, orderItem).fetchJoin()
+                .innerJoin(orderItem.item, item)
+                .where(item.regId.eq(regId))
                 .fetch();
     }
 
     @Override
     public List<Order> findByMemberId (String memberId) {
         return queryFactory.selectFrom(order)
-                .leftJoin(order.member).fetchJoin()
+                .innerJoin(order.member).fetchJoin()
                 .where(order.member.id.eq(memberId))
                 .fetch();
     }

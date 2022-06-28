@@ -4,6 +4,7 @@ import com.commerce.util.ExceptionUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Getter
+@ToString(exclude = {"member", "orderItems", "delivery"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order extends BaseEntity {
 
