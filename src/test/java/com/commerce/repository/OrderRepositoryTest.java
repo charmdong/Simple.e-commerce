@@ -26,7 +26,7 @@ class OrderRepositoryTest {
 
     @Test
     void findAllWithItem () {
-        List<Order> orderList = orderRepository.findAllWithItem2();
+        List<Order> orderList = orderRepository.findAllWithItem();
 
         for (Order order : orderList) {
             System.out.println(order);
