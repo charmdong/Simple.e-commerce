@@ -1,54 +1,85 @@
 package com.commerce.service;
 
-import com.commerce.domain.Cart;
-import com.commerce.vo.order.CartVO;
-import com.commerce.repository.CartRepository;
+import com.commerce.controller.form.ItemForm;
+import com.commerce.controller.form.MemberForm;
+import com.commerce.domain.Item;
+import com.commerce.domain.Member;
+import com.commerce.domain.Order;
+import com.commerce.domain.OrderStatus;
+import com.commerce.repository.OrderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
 @Transactional
+@SpringBootTest
 class OrderServiceTest {
 
     @Autowired
-    CartService cartService;
+    OrderService orderService;
 
     @Autowired
-    CartRepository cartRepository;
+    OrderRepository orderRepository;
+
+    @Autowired
+    MemberService memberService;
+
+    @Autowired
+    ItemService itemService;
 
     @Test
-    @Rollback(value = false)
-    void addCartTest () {
-        String userId = "sale";
-        Long itemId = 2L;
-        int count = 2;
+    void order() {
+        Member member = createMember();
+        Item item = createItem();
 
-        CartVO cartVO = cartService.addCart(userId, itemId, count);
+        orderService.order(member.getId(), item.getId(), 1);
 
-        assertThat(cartVO.getItemId()).isEqualTo(2L);
+        List<Order> orderList = orderRepository.findByMemberId("member1");
+        assertThat(orderList.size()).isEqualTo(1);
+        assertThat(orderList.get(0).getTotalPrice()).isEqualTo(2000000);
     }
 
     @Test
-    void findCartTest () {
-        String userId = "sale";
-        List<CartVO> cartList = cartService.findCartByUserId(userId);
+    void cancelOrder() {
+        Member member = createMember();
+        Item item = createItem();
 
-        assertThat(cartList.size()).isEqualTo(1);
+        Long orderId = orderService.order(member.getId(), item.getId(), 1);
+        orderService.cancelOrder(orderId);
+
+        Order order = orderRepository.findById(orderId).get();
+        assertThat(order.getOrderStatus()).isEqualTo(OrderStatus.CANCEL);
     }
 
-    @Test
-    @Rollback(value = false)
-    void updateCartTest () {
-        cartService.updateCart(14L, 4);
-        Cart result = cartRepository.findById(14L).get();
-        assertThat(result.getCount()).isEqualTo(4);
+    private Item createItem () {
+        ItemForm itemForm = new ItemForm();
+        itemForm.setName("Macbook Pro");
+        itemForm.setCompanyName("Apple");
+        itemForm.setPrice(2000000);
+        itemForm.setStockQuantity(10);
+        itemForm.setDescription("M1 14inch Macbook Pro");
+
+        Item item = Item.createItem(itemForm);
+        itemService.saveItem(item);
+        return item;
     }
 
+    private Member createMember () {
+        MemberForm memberForm = new MemberForm();
+        memberForm.setId("member1");
+        memberForm.setName("test");
+        memberForm.setPassword("password1");
+        memberForm.setCity("seongnam");
+        memberForm.setStreet("imaero 54");
+        memberForm.setZipcode("123123");
+
+        Member member = Member.createMember(memberForm);
+        memberService.joinMember(member);
+        return member;
+    }
 }
