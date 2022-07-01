@@ -65,13 +65,19 @@ public class CartApiController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     * 장바구니 수정
+     * @param cartId
+     * @param count
+     * @return
+     */
     @PatchMapping("/{cartId}")
     public ResponseEntity<Map<String, Object>> updateCart (@PathVariable("cartId") Long cartId, @RequestParam("count") int count) {
 
         cartService.updateCart(cartId, count);
         Map<String, Object> result = new HashMap<>();
         result.put("data", true);
-        result.put("message", "SUCCESS");
+        result.put("message", "장바구니가 수정되었습니다.");
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
