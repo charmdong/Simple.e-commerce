@@ -1,0 +1,21 @@
+spring:
+  # JPA Setting
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        #show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 100 # where in ( ) ??
+
+  # Log Setting
+  output:
+    ansi:
+      enabled: always
+
+# Logging Setting
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace # query parameter ??
