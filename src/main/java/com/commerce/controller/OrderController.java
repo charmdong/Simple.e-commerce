@@ -1,17 +1,16 @@
 package com.commerce.controller;
 
 import com.commerce.domain.Role;
-import com.commerce.vo.SessionVO;
-import com.commerce.vo.order.OrderVO;
 import com.commerce.repository.OrderSearch;
 import com.commerce.service.OrderService;
 import com.commerce.util.SessionUtils;
+import com.commerce.vo.SessionVO;
+import com.commerce.vo.order.OrderVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -38,9 +37,9 @@ public class OrderController {
      * @return
      */
     @PostMapping("/order")
-    public String order (HttpSession session, @RequestParam("itemId") Long itemId, @RequestParam("count") int count) {
-        SessionVO sessionVO = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
-        String userId = sessionVO.getId();
+    public String order (@SessionAttribute(name = SessionUtils.LOGIN_SESSION) SessionVO session,
+                         @RequestParam("itemId") Long itemId, @RequestParam("count") int count) {
+        String userId = session.getId();
         orderService.order(userId, itemId, count);
         return "redirect:/orders";
     }
@@ -48,13 +47,14 @@ public class OrderController {
     /**
      * 주문 목록 조회
      *
-     * @param session
+     * @param sessionVO
      * @param model
      * @return
      */
     @GetMapping("/orders")
-    public String orderList (@ModelAttribute("orderSearch") OrderSearch orderSearch, HttpSession session, Model model) {
-        SessionVO sessionVO = (SessionVO) session.getAttribute(SessionUtils.LOGIN_SESSION);
+    public String orderList (@ModelAttribute("orderSearch") OrderSearch orderSearch,
+                             @SessionAttribute(name = SessionUtils.LOGIN_SESSION) SessionVO sessionVO, Model model) {
+
         if (sessionVO.getRole().equals(Role.USER)) {
             orderSearch.setUserId(sessionVO.getId());
         }
