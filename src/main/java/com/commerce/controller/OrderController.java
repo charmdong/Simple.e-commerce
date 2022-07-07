@@ -54,15 +54,13 @@ public class OrderController {
     @GetMapping("/orders")
     public String orderList (@ModelAttribute("orderSearch") OrderSearch orderSearch,
                              @SessionAttribute(name = SessionUtils.LOGIN_SESSION) SessionVO sessionVO, Model model) {
-
-        if (sessionVO.getRole().equals(Role.USER)) {
+        // 일반 사용자, 판매자
+        Role role = sessionVO.getRole();
+        if (!role.equals(Role.ADMIN)) {
             orderSearch.setUserId(sessionVO.getId());
         }
-        else if (sessionVO.getRole().equals(Role.SALE)) {
-            // 자신이 판매하는 상품을 구매한 내역만 조회
-        }
 
-        List<OrderVO> orderList = orderService.findOrdersByCondition(orderSearch);
+        List<OrderVO> orderList = orderService.findOrdersByCondition(role, orderSearch);
         model.addAttribute("orderList", orderList);
 
         return "order/orderList";

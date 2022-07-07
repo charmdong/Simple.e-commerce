@@ -1,15 +1,16 @@
 package com.commerce.service;
 
 import com.commerce.domain.*;
-import com.commerce.vo.order.OrderVO;
+import com.commerce.repository.ItemRepository;
+import com.commerce.repository.MemberRepository;
+import com.commerce.repository.OrderRepository;
 import com.commerce.repository.OrderSearch;
-import com.commerce.repository.*;
 import com.commerce.util.ExceptionUtils;
+import com.commerce.vo.order.OrderVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -72,22 +73,29 @@ public class OrderService {
      * @return
      */
     @Transactional(readOnly = true)
-    public List<OrderVO> findOrdersByCondition (OrderSearch orderSearch) {
+    public List<OrderVO> findOrdersByCondition (Role role, OrderSearch orderSearch) {
         log.info("orderSearch={}", orderSearch);
         String userId = orderSearch.getUserId();
         OrderStatus orderStatus = orderSearch.getOrderStatus();
 
-        if (StringUtils.hasText(userId) && orderStatus != null) {
-            return orderRepository.findByMemberIdAndOrderStatus(userId, orderStatus).stream().map(OrderVO::new).collect(Collectors.toList());
+        // 판매자
+        if (role.equals(Role.SALE)) {
+            return null;
         }
-        else if (StringUtils.hasText(userId) && orderStatus == null) {
-            return orderRepository.findByMemberId(userId).stream().map(OrderVO::new).collect(Collectors.toList());
+        // 일반 사용자
+        else if(role.equals(Role.USER)) {
+            // 전체
+            if (orderStatus != null) {
+                return orderRepository.findByMemberIdAndOrderStatus(userId, orderStatus).stream().map(OrderVO::new).collect(Collectors.toList());
+            }
+            // 주문 or 취소
+            else {
+                return orderRepository.findByMemberId(userId).stream().map(OrderVO::new).collect(Collectors.toList());
+            }
         }
-        else if (!StringUtils.hasText(userId) && orderStatus != null) {
-            return orderRepository.findByOrderStatus(orderStatus).stream().map(OrderVO::new).collect(Collectors.toList());
-        }
+        // 관리자
         else {
-            return orderRepository.findAllWithItem().stream().map(OrderVO::new).collect(Collectors.toList());
+            return null;
         }
     }
 
