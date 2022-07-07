@@ -1,6 +1,7 @@
 package com.commerce.repository;
 
 import com.commerce.domain.Order;
+import com.commerce.domain.OrderStatus;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
@@ -38,20 +39,29 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     }
 
     @Override
-    public List<Order> findByRegId (String regId) {
+    public List<Order> findByItemRegId (String regId, OrderStatus orderStatus) {
         return queryFactory.select(order)
                 .from(order)
                 .innerJoin(order.orderItems, orderItem).fetchJoin()
                 .innerJoin(orderItem.item, item)
-                .where(item.regId.eq(regId))
+                .where(item.regId.eq(regId),
+                        order.orderStatus.eq(orderStatus))
                 .fetch();
     }
 
     @Override
-    public List<Order> findByMemberId (String memberId) {
+    public List<Order> findByMemberId (String memberId, OrderStatus orderStatus) {
         return queryFactory.selectFrom(order)
                 .innerJoin(order.member).fetchJoin()
-                .where(order.member.id.eq(memberId))
+                .where(order.member.id.eq(memberId),
+                        order.orderStatus.eq(orderStatus))
+                .fetch();
+    }
+
+    @Override
+    public List<Order> findAllWithOrderStatus (OrderStatus orderStatus) {
+        return queryFactory.selectFrom(order)
+                .where(order.orderStatus.eq(orderStatus))
                 .fetch();
     }
 }

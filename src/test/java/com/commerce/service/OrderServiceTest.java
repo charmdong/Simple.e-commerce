@@ -39,7 +39,7 @@ class OrderServiceTest {
 
         orderService.order(member.getId(), item.getId(), 1);
 
-        List<Order> orderList = orderRepository.findByMemberId("member1");
+        List<Order> orderList = orderRepository.findByMemberId("member1", null);
         assertThat(orderList.size()).isEqualTo(1);
         assertThat(orderList.get(0).getTotalPrice()).isEqualTo(2000000);
     }

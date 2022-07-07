@@ -20,7 +20,7 @@ class OrderRepositoryTest {
 
     @Test
     void findOrderTest () {
-        List<Order> orderList = orderRepository.findByRegId("sale");
+        List<Order> orderList = orderRepository.findByItemRegId("sale", null);
         assertThat(orderList.size()).isEqualTo(1);
     }
 
@@ -36,7 +36,7 @@ class OrderRepositoryTest {
     @Test
     void findByRegId () {
         System.out.println("@@@@@");
-        List<Order> orderList = orderRepository.findByRegId("admin");
+        List<Order> orderList = orderRepository.findByItemRegId("admin", null);
         System.out.println("@@@@@");
 
         for (Order order : orderList) {
@@ -46,7 +46,7 @@ class OrderRepositoryTest {
 
     @Test
     void findByMemberId () {
-        List<Order> orderList = orderRepository.findByMemberId("sale");
+        List<Order> orderList = orderRepository.findByMemberId("sale", null);
 
         for (Order order : orderList) {
             System.out.println(order);

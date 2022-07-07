@@ -74,28 +74,22 @@ public class OrderService {
      */
     @Transactional(readOnly = true)
     public List<OrderVO> findOrdersByCondition (Role role, OrderSearch orderSearch) {
-        log.info("orderSearch={}", orderSearch);
+
         String userId = orderSearch.getUserId();
         OrderStatus orderStatus = orderSearch.getOrderStatus();
 
+        // TODO 페이징 적용
         // 판매자
         if (role.equals(Role.SALE)) {
-            return null;
+            return orderRepository.findByItemRegId(userId, orderStatus).stream().map(OrderVO::new).collect(Collectors.toList());
         }
         // 일반 사용자
         else if(role.equals(Role.USER)) {
-            // 전체
-            if (orderStatus != null) {
-                return orderRepository.findByMemberIdAndOrderStatus(userId, orderStatus).stream().map(OrderVO::new).collect(Collectors.toList());
-            }
-            // 주문 or 취소
-            else {
-                return orderRepository.findByMemberId(userId).stream().map(OrderVO::new).collect(Collectors.toList());
-            }
+            return orderRepository.findByMemberId(userId, orderStatus).stream().map(OrderVO::new).collect(Collectors.toList());
         }
         // 관리자
         else {
-            return null;
+            return orderRepository.findAllWithOrderStatus(orderStatus).stream().map(OrderVO::new).collect(Collectors.toList());
         }
     }
 
