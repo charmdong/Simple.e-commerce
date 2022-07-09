@@ -56,7 +56,7 @@ public class OrderController {
                              @SessionAttribute(name = SessionUtils.LOGIN_SESSION) SessionVO sessionVO, Model model) {
         // 일반 사용자, 판매자
         Role role = sessionVO.getRole();
-        if (!role.equals(Role.ADMIN)) {
+        if (!Role.ADMIN.equals(role)) {
             orderSearch.setUserId(sessionVO.getId());
         }
 
