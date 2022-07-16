@@ -1,18 +1,17 @@
 package com.commerce;
 
-import com.commerce.util.SessionUtils;
-import com.commerce.vo.SessionVO;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @EnableJpaAuditing
@@ -28,19 +27,21 @@ public class CommerceApplication {
      *
      * @return 사용자 ID
      */
-    @Bean
+    //@Bean
     public AuditorAware<String> auditorProvider () {
 
-        return () -> {
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            SessionVO loginInfo = (SessionVO) attr.getRequest().getSession().getAttribute(SessionUtils.LOGIN_SESSION);
-            String loginId = loginInfo.getId();
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 
-            if (StringUtils.hasText(loginId)) {
-                return Optional.of(loginId);
+        if (requestAttributes != null) {
+            HttpServletRequest request = requestAttributes.getRequest();
+            HttpSession session = request.getSession();
+
+            if (session != null) {
+                return () -> Optional.of((String) session.getAttribute("loginId"));
             }
-            return Optional.of("Anonymous");
-        };
+            else return () -> Optional.of("Anonymous");
+        }
+        else return () -> Optional.of("Anonymous");
     }
 
     @Bean
