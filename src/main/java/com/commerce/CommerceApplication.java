@@ -27,7 +27,7 @@ public class CommerceApplication {
      *
      * @return 사용자 ID
      */
-    //@Bean
+    @Bean
     public AuditorAware<String> auditorProvider () {
 
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
