@@ -18,6 +18,8 @@ import java.util.Optional;
 @SpringBootApplication
 public class CommerceApplication {
 
+    private final String ANONYMOUS = "ANONYMOUS";
+
     public static void main (String[] args) {
         SpringApplication.run(CommerceApplication.class, args);
     }
@@ -39,9 +41,9 @@ public class CommerceApplication {
             if (session != null) {
                 return () -> Optional.of((String) session.getAttribute("loginId"));
             }
-            else return () -> Optional.of("Anonymous");
+            else return () -> Optional.of(ANONYMOUS);
         }
-        else return () -> Optional.of("Anonymous");
+        else return () -> Optional.of(ANONYMOUS);
     }
 
     @Bean
