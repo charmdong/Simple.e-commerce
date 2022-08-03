@@ -15,6 +15,9 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<Map<String, Object>> exceptionHandler(RuntimeException e) {
+
+        log.error("{}: {}", e.getMessage(), e);
+
         Map<String, Object> result = new HashMap<>();
 
         result.put("exception", e.getClass());
