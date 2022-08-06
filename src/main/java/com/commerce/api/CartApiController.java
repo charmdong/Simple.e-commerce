@@ -1,5 +1,6 @@
 package com.commerce.api;
 
+import com.commerce.message.MessageConstants;
 import com.commerce.vo.SessionVO;
 import com.commerce.vo.order.CartVO;
 import com.commerce.service.CartService;
@@ -34,12 +35,7 @@ public class CartApiController {
 
         Map<String, Object> response = new HashMap<>();
         response.put("data", result);
-
-        String message = "SUCCESS";
-        if (result == true) {
-            message = "이미 장바구니에 존재합니다.";
-        }
-        response.put("message", message);
+        response.put("message", result == true ? MessageConstants.ORDER_SUCCESS : MessageConstants.SUCCESS);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
