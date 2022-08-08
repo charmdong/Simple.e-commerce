@@ -1,5 +1,6 @@
 package com.commerce.api;
 
+import com.commerce.message.MessageConstants;
 import com.commerce.vo.SessionVO;
 import com.commerce.vo.order.OrderItemRequest;
 import com.commerce.service.OrderService;
@@ -39,7 +40,7 @@ public class OrderApiController {
 
         Map<String, Object> result = new HashMap<>();
         result.put("data", true);
-        result.put("message", "주문이 완료되었습니다.");
+        result.put("message", MessageConstants.ORDER_SUCCESS);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
