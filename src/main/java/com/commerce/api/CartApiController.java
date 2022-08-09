@@ -35,7 +35,7 @@ public class CartApiController {
 
         Map<String, Object> response = new HashMap<>();
         response.put("data", result);
-        response.put("message", result == true ? MessageConstants.ORDER_SUCCESS : MessageConstants.SUCCESS);
+        response.put("message", result == true ? MessageConstants.CART_DUP : MessageConstants.ORDER_SUCCESS);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -56,7 +56,7 @@ public class CartApiController {
         CartVO cartVO = cartService.addCart(userId, itemId, count);
         Map<String, Object> result = new HashMap<>();
         result.put("data", cartVO);
-        result.put("message", "장바구니에 담았습니다.");
+        result.put("message", MessageConstants.CART_ADD);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
