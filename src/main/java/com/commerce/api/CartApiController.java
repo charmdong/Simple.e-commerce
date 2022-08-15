@@ -73,7 +73,7 @@ public class CartApiController {
         cartService.updateCart(cartId, count);
         Map<String, Object> result = new HashMap<>();
         result.put("data", true);
-        result.put("message", "장바구니가 수정되었습니다.");
+        result.put("message", MessageConstants.CARD_UPDATE);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -91,7 +91,7 @@ public class CartApiController {
         cartService.removeCart(cartId);
         Map<String, Object> result = new HashMap<>();
         result.put("data", true);
-        result.put("message", "장바구니에서 삭제되었습니다.");
+        result.put("message", MessageConstants.CART_DELETE);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
