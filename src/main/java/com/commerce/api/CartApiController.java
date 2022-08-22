@@ -73,7 +73,7 @@ public class CartApiController {
         cartService.updateCart(cartId, count);
         Map<String, Object> result = new HashMap<>();
         result.put("data", true);
-        result.put("message", MessageConstants.CARD_UPDATE);
+        result.put("message", MessageConstants.CART_UPDATE);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
