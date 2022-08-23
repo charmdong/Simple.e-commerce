@@ -1,5 +1,6 @@
 package com.commerce.api;
 
+import com.commerce.message.MessageConstants;
 import com.commerce.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class MemberApiController {
 
         Boolean isValid = memberService.isValidId(id);
         result.put("isValid", isValid);
-        result.put("message", isValid ? "사용 가능한 아이디입니다." : "사용할 수 없는 아이디입니다.");
+        result.put("message", isValid ? MessageConstants.VALID_ID : MessageConstants.INVALID_ID);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
