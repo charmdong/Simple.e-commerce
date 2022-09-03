@@ -64,4 +64,12 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .where(order.orderStatus.eq(orderStatus))
                 .fetch();
     }
+
+    @Override
+    public List<Order> findByMemberIdWithPeriod (String memberId, OrderSearch orderSearch) {
+        return queryFactory.selectFrom(order)
+                .where(order.member.id.eq(memberId))
+                .where(order.orderDate.between(orderSearch.getStartDate(), orderSearch.getEndDate()))
+                .fetch();
+    }
 }
