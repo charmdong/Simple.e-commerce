@@ -21,7 +21,6 @@ public class OrderController {
 
     /**
      * 주문 폼 이동
-     *
      * @return
      */
     @GetMapping("/order")
@@ -46,7 +45,6 @@ public class OrderController {
 
     /**
      * 주문 목록 조회
-     *
      * @param sessionVO
      * @param model
      * @return
@@ -68,7 +66,6 @@ public class OrderController {
 
     /**
      * 주문 취소
-     *
      * @param orderId
      * @return
      */
