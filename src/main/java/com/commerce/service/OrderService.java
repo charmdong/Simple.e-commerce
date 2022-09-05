@@ -81,7 +81,11 @@ public class OrderService {
         // TODO 페이징 적용
         // 판매자
         if (role.equals(Role.SALE)) {
-            return orderRepository.findByItemRegId(userId, orderStatus).stream().map(OrderVO::new).collect(Collectors.toList());
+            if (orderSearch.getStartDate() != null) {
+                return orderRepository.findByMemberIdWithPeriod(userId, orderSearch).stream().map(OrderVO::new).collect(Collectors.toList());
+            } else {
+                return orderRepository.findByItemRegId(userId, orderStatus).stream().map(OrderVO::new).collect(Collectors.toList());
+            }
         }
         // 일반 사용자
         else if(role.equals(Role.USER)) {
