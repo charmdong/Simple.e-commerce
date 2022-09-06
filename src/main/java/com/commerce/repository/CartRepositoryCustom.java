@@ -7,4 +7,6 @@ import java.util.List;
 public interface CartRepositoryCustom {
 
     List<Cart> findAllByMemberId(String memberId);
+
+    List<Cart> findByItemName(String itemName);
 }
