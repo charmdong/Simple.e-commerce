@@ -18,6 +18,12 @@ public class CartController {
 
     private final CartService cartService;
 
+    /**
+     * 장바구니 목록 조회
+     * @param session
+     * @param model
+     * @return
+     */
     @GetMapping("/carts")
     public String cartList(@SessionAttribute(name = SessionUtils.LOGIN_SESSION) SessionVO session, Model model) {
         String userId = session.getId();
