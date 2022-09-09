@@ -8,5 +8,5 @@ public interface CartRepositoryCustom {
 
     List<Cart> findAllByMemberId(String memberId);
 
-    List<Cart> findByItemName(String itemName);
+    List<Cart> findByUserIdAndItemName(String userId, String itemName);
 }

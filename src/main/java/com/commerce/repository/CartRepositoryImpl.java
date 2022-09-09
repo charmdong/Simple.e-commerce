@@ -25,9 +25,11 @@ public class CartRepositoryImpl implements CartRepositoryCustom {
     }
 
     @Override
-    public List<Cart> findByItemName (String itemName) {
+    public List<Cart> findByUserIdAndItemName (String userId, String itemName) {
         return queryFactory.selectFrom(cart)
                 .innerJoin(cart.item, item).fetchJoin()
+                .innerJoin(cart.member, member)
+                .where(member.id.eq(userId))
                 .where(cart.item.name.startsWith(itemName))
                 .fetch();
     }
