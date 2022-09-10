@@ -77,6 +77,17 @@ public class CartService {
     }
 
     /**
+     * 장바구니 목록 조회 (상품명)
+     * @param userId
+     * @param itemName
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public List<CartVO> findCartListByItemName (String userId, String itemName) {
+        return cartRepository.findByUserIdAndItemName(userId, itemName).stream().map(CartVO::new).collect(Collectors.toList());
+    }
+
+    /**
      * 장바구니 수정
      * @param cartId
      * @param count
