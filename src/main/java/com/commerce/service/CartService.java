@@ -40,13 +40,8 @@ public class CartService {
 
         Member member = memberRepository.findById(userId).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.USER_NOT_FOUND));
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new NoSuchElementException(ExceptionUtils.ITEM_NOT_FOUND));
-        Cart cart = cartRepository.findByItemAndMember(item, member);
 
-        if (cart != null) {
-            return true;
-        }
-
-        return false;
+        return cartRepository.findByItemAndMember(item, member).isPresent();
     }
 
     /**

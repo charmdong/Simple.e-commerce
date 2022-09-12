@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Long>, CartRepositoryCustom {
@@ -19,7 +20,7 @@ public interface CartRepository extends JpaRepository<Cart, Long>, CartRepositor
             " where m.id = :userId")
     List<Cart> findAllByUserId(@Param("userId") String userId);
 
-    Cart findByItemAndMember(Item item, Member member);
+    Optional<Cart> findByItemAndMember(Item item, Member member);
 
     void deleteByMemberAndItem(Member member, Item item);
 }
