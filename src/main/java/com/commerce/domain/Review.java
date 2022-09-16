@@ -28,6 +28,6 @@ public class Review {
 
     // 생성 메서드
     public static Review createReview() {
-
+        return null;
     }
 }
