@@ -28,6 +28,9 @@ public class Item extends BaseEntity {
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
 
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    private List<Review> reviews = new ArrayList<>();
+
     // 생성자 메서드
     public static Item createItem(ItemForm form) {
         Item item = new Item();
