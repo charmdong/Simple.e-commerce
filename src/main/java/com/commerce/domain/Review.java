@@ -1,5 +1,6 @@
 package com.commerce.domain;
 
+import com.commerce.vo.review.CreateReviewVO;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -27,7 +28,13 @@ public class Review {
     }
 
     // 생성 메서드
-    public static Review createReview() {
-        return null;
+    public static Review createReview(CreateReviewVO reviewVO, Item item) {
+        Review review = new Review();
+
+        review.content = reviewVO.getContent();
+        review.score = reviewVO.getScore();
+        review.setItem(item);
+
+        return review;
     }
 }
