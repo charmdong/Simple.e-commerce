@@ -49,7 +49,7 @@ public class ItemService {
     }
 
     public List<ItemVO> findAllItems () {
-        List<Item> itemList = itemRepository.findAll();
+        List<Item> itemList = itemRepository.findAllItemList();
         return itemList.stream().map(ItemVO::new).collect(Collectors.toList());
     }
 }
